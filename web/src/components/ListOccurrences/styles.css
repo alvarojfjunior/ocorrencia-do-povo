@@ -1,0 +1,43 @@
+div {
+    margin: 0 auto;
+}
+
+h2 {
+    color: #362e4e;
+    text-align: center;
+}
+
+.card {
+    max-width: 400px;
+    padding: 10px;
+    border-style: solid;
+    border-width: 1px;
+    color: #362e4e;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.card h2 {
+    text-align: center;
+}
+
+.card img {
+    max-width: 100%;
+    border-radius: 20px;
+}
+
+.card div {
+    text-align: right;
+}
+
+.card span {
+    color: #362e4e;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.card p {
+    text-align: justify;
+    color: #362e4e;
+    font-size: 17px;
+}

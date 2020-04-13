@@ -1,0 +1,36 @@
+.app-bar {
+    display: flex; /* Filhos ficam inline */
+    align-items: center; /* Alinhamento vertical dos filhos */
+    justify-content: space-between; /* Tipo de espaçamento */
+    flex-wrap: wrap; /* Caso precise, quebra linha */
+    background-color: #745cc5;
+}
+
+.app-bar > h1 {
+    margin: 5px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+.app-bar > nav {
+    margin-right: 10px;
+}
+
+.app-bar > h1 > a {
+    text-decoration:none;
+    color: whitesmoke;
+}
+
+.app-bar > nav > a {
+    text-decoration:none;
+    color: whitesmoke;
+    margin-left: 8px;
+}
+
+
+@media screen and (max-width: 500px) {
+    .app-bar {
+        justify-content: center;
+        text-align: center;
+    }
+}
