@@ -1,18 +1,24 @@
 import React from 'react';
 
+import { connect } from 'react-redux';
+
 import './styles.css';
 
-function AppBar() {
+import * as postActions from '../../store/actions/post';
+
+import PostOccurrences from '../PostOccurrences';
+
+function AppBar(props) {
     return (
-        <div class="app-bar">
+        <div className="app-bar">
             <h1>
                 <a href="#">Ocorrência do Povo</a>
             </h1>
             <nav>
-                <a href="#">Registrar Ocorrência</a>
+                <button onClick={() => props.dispatch(postActions.setPost(true))} >REGISTRAR OCORRÊNCIA</button>
             </nav>
         </div>
     );
 }
 
-export default AppBar;
+export default connect(state => ({ state }))(AppBar);

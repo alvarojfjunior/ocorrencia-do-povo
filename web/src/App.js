@@ -1,10 +1,16 @@
 import React from 'react';
 
+import './global.css';
+import { Provider } from 'react-redux';
+import store from './store';
+
 import Main from './pages/main';
 
 function App() {
   return (
-    <Main></Main>
+    <Provider store={store}>
+      <Main></Main>
+    </Provider>
   );
 }
 

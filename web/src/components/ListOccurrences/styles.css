@@ -1,4 +1,4 @@
-.container {
+.list-occurrences-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-auto-rows: auto;
@@ -18,28 +18,34 @@
 }
 .card img {
     max-width: 100%;
+    cursor: pointer;
 }
 .card h3 {
     text-align: justify;
     margin: 0 10px;
     margin-bottom: 8px;
     color: #696969;
+    color: RGBA(0,0,0,.70);
+    cursor: pointer;
 }
 .card p {
     text-align: justify;
     margin: 10px;
     color: #696969;
+    max-width: 300ch;
 }
 .card a {  
     margin: 10px;
     margin-top: 0px;
 }
 
-@media screen and (max-width: 370px) {
-    .container {
-        padding-top: 100px;
+@media screen and (max-width: 580px) {
+    .list-occurrences-container {
+        padding-top: 110px;
+        position: static;
     }
     .card {
         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+        
     }
 }

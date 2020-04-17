@@ -31,12 +31,34 @@
     padding: 4px;
 }
 
+.app-bar > nav > button {
+    text-align: center;
+    background-color: #642484;
+    font-size: 20px;
+    font-weight: bold;
+    color: whitesmoke;
+    border-radius: 5px;
+    border: 1 whitesmoke;
+    cursor: pointer;
+    padding: 5px;
+}
 
-@media screen and (max-width: 500px) {
+.app-bar > nav > button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+
+
+@media screen and (max-width: 580px) {
     .app-bar {
         justify-content: center;
         text-align: center;
-        padding-bottom: 20px;
+        padding-bottom: 15px;
         position: fixed;
+    }
+    .app-bar > nav > button {
+        transform: scale(1.01);
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     }
 }

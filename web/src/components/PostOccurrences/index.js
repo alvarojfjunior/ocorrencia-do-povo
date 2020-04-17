@@ -1,15 +1,21 @@
-import React, {useState} from 'react';
+import React, {useState, ReactDOM} from 'react';
 
-import ReactModal from 'react-modal';
+import { connect } from 'react-redux';
 
-function Main() {
-    const [isOpen, setIsOpen] = useState(false);
+import './styles.css';
+
+import * as postActions from '../../store/actions/post';
+
+function PostOccurrences(props) {
+    const [userName, setUserName] = useState('');
+    const [titlePost, setTitlePost] = useState('');
+    const [descriptionPost, setDescriptionPost] = useState('');
+    
     return (
-        <ReactModal isOpen={isOpen}>
-            <p>Lançamento de Ocorrencia</p>
-            <button onClick={() =>setIsOpen(false)}>Fechar</button>
-        </ReactModal>
+        <div>
+            <h1>Post form</h1>
+        </div>
     );
 }
 
-export default Main;
+export default connect(state => ({ state }))(PostOccurrences);
