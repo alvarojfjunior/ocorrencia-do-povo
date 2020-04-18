@@ -1,10 +1,14 @@
 import React from 'react'
 
+import { useHistory } from "react-router-dom";
+
 import './styles.css';
 
-function Main() {
+function ListOccurrences() {
+    const history = useHistory();
+    
     function handleClickCard() {
-        console.log('clicou')
+        history.push("/occurrence/1");
     }
     
     return (
@@ -36,4 +40,4 @@ function Main() {
     );
 }
 
-export default Main;
+export default ListOccurrences;

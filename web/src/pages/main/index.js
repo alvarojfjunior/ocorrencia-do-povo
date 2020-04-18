@@ -3,7 +3,6 @@ import './styles.css';
 
 import { connect } from 'react-redux';
 
-import PostOccurences from '../../components/PostOccurrences';
 import ListOccurrences from '../../components/ListOccurrences';
 import AppBar from '../../components/AppBar';
 

@@ -41,8 +41,7 @@
 
 @media screen and (max-width: 580px) {
     .list-occurrences-container {
-        padding-top: 110px;
-        position: static;
+        padding-top: 92px;
     }
     .card {
         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);

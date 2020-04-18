@@ -1,15 +1,15 @@
 import React from 'react';
+import Routes from './routes';
 
 import './global.css';
 import { Provider } from 'react-redux';
 import store from './store';
 
-import Main from './pages/main';
 
 function App() {
   return (
     <Provider store={store}>
-      <Main></Main>
+      <Routes></Routes>
     </Provider>
   );
 }

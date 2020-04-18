@@ -1,21 +1,20 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 
 import './styles.css';
-
-import * as postActions from '../../store/actions/post';
-
-import PostOccurrences from '../PostOccurrences';
 
 function AppBar(props) {
     return (
         <div className="app-bar">
             <h1>
-                <a href="#">Ocorrência do Povo</a>
+            <Link to='/'>Ocorrência do Povo</Link>
             </h1>
             <nav>
-                <button onClick={() => props.dispatch(postActions.setPost(true))} >REGISTRAR OCORRÊNCIA</button>
+                {props.btnPostVisible !== false ? <Link className="button-new-post" to='/post'>REGISTRAR OCORRÊNCIA</Link> : <></>}
+                
             </nav>
         </div>
     );

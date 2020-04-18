@@ -1,0 +1,22 @@
+.list-occurrences-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: auto;
+    grid-gap: 1rem;
+    padding: 1rem;
+}
+
+.occurrence-container {
+    padding: 10px;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+@media screen and (max-width: 580px) {
+    .main-img {
+        position: absolute;
+        width: 100%;
+        top: 80px;
+    }
+}
+
