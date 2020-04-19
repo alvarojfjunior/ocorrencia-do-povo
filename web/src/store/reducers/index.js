@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import post from './post';
+import snackbar from './snackbar';
 
 export default combineReducers ({
-    post,
+    snackbar,
 })

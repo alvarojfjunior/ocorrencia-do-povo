@@ -1,0 +1,44 @@
+.snackbar-container {
+	left: 50%;
+	bottom: 0;
+	z-index: 3;
+	width: 60%;
+	height: 0px;
+	margin-left: -30%;
+	line-height: 50px;
+	position: fixed;
+    background-color: #45a049;
+	border-radius: 5px;
+	transition: all .3s;
+	overflow: hidden;
+}
+
+.snackbar-container > span {
+	border: 0;
+	float: left;
+	color: white;
+	font-size: 15px;
+	margin-left: 3%;
+	background: transparent;
+	text-transform: uppercase;
+}
+
+.snackbar-container > button {
+	border: 0;
+    width:15%;
+    height:100%;
+	float: right;
+	color: white;
+	display: block;
+	cursor: pointer;
+    font: 16px 'Lato';
+	position: relative;
+	background: transparent;
+}
+
+@media screen and (max-width: 580px) {
+	.snackbar-container {
+		margin-left: -45%;
+		width: 90%;
+	}
+}

@@ -1,0 +1,6 @@
+@media screen and (max-width: 580px) {
+    .main-container {
+        position: relative;
+        top: 20px;
+    }
+}

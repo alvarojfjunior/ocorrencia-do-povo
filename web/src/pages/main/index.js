@@ -8,9 +8,11 @@ import AppBar from '../../components/AppBar';
 
 function Main(props) {
     return (
-        <div className="main-container">
-            <AppBar></AppBar> 
-            <ListOccurrences></ListOccurrences>
+        <div>
+            <AppBar></AppBar>
+            <div className="main-container">
+                <ListOccurrences></ListOccurrences>
+            </div>
         </div>
     );
 }

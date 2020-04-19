@@ -4,7 +4,7 @@ const INITIAL_STATE =  {
 
 export default function user(state = INITIAL_STATE, action) {
     
-    if (action.type === 'SET_POST') {
+    if (action.type === 'SET_SNACKBAR') {
         return {
             ...state, 
             visible: action.visible,

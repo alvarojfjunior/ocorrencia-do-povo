@@ -1,26 +1,44 @@
-div.post-container  {
+.post-container  {
     padding: 20px;
     margin: 0 auto;
     max-width: 500px;
     border-radius: 5px;
     background-color: #f2f2f2;
 }
+.post-container h3 {
+    color: #642484;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.post-container label {
+    margin-left: 3px;
+}
 
 .post-container input[type=text], textarea {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
+    font-size: 15px;
+    color: #696969;
+    max-width: 100%;
+    min-width: 100%;
+    padding: 8px 10px;
+    margin: 5px 0;
+    margin-bottom: 15px;
     display: block;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
 }
+
+.post-container textarea {
+    min-height: 100px;
+}
   
 .post-container input[type=submit] {
     width: 100%;
+    font-size: 25px;
     background-color: #642484;
     color: white;
-    padding: 14px 20px;
+    padding: 5px 10px;
     margin: 8px 0;
     border: none;
     border-radius: 4px;

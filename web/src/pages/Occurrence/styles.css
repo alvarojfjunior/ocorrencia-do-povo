@@ -1,22 +1,27 @@
-.list-occurrences-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-auto-rows: auto;
-    grid-gap: 1rem;
-    padding: 1rem;
-}
-
 .occurrence-container {
     padding: 10px;
     margin: 0 auto;
     max-width: 100%;
+    color: #696969;
+}
+
+.occurrence-container img {
+    width: 100%;
+}
+
+.occurrence-container h2 {
+    text-align: justify;
+    margin: 5px auto;
+}
+
+.occurrence-container p {
+    text-align: justify;
 }
 
 @media screen and (max-width: 580px) {
-    .main-img {
-        position: absolute;
-        width: 100%;
-        top: 80px;
+    .occurrence-container {
+        position: relative;
+        top: 100px;
     }
 }
 

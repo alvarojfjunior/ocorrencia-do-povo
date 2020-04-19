@@ -14,7 +14,6 @@ function AppBar(props) {
             </h1>
             <nav>
                 {props.btnPostVisible !== false ? <Link className="button-new-post" to='/post'>REGISTRAR OCORRÊNCIA</Link> : <></>}
-                
             </nav>
         </div>
     );
