@@ -5,9 +5,39 @@
     border-radius: 5px;
     background-color: #f2f2f2;
 }
+
+.post-container .carousel {
+    margin-top: 10px;
+}
+
+.post-container .carousel .item {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    background:url("../../assets/dslr-camera.png") #642484 center no-repeat;
+    background-repeat: no-repeat;
+    background-size: 50px 50px;
+}
+
+.post-container .carousel .item .input-upload {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    display: inline-block;
+    opacity: 0;
+    z-index: 99;
+}
+
+.post-container .carousel .item .ico-camera {
+    color: white;
+    margin: 25px 25px;
+    font-size: 50px;
+    overflow: hidden;
+}
+
 .post-container h3 {
     color: #642484;
-    margin-bottom: 15px;
+    margin-bottom: 35px;
     text-align: center;
 }
 

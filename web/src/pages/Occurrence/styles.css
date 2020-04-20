@@ -12,10 +12,12 @@
 .occurrence-container h2 {
     text-align: justify;
     margin: 5px auto;
+    color: RGBA(0,0,0,.70);
 }
 
 .occurrence-container p {
     text-align: justify;
+    color: RGBA(0,0,0,.70);
 }
 
 @media screen and (max-width: 580px) {

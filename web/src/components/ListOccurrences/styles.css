@@ -10,6 +10,7 @@
     border-radius: 4px;
     background: #fff;
     border-radius: 2px;
+    max-height: 420px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
 }
@@ -20,6 +21,16 @@
     max-width: 100%;
     cursor: pointer;
 }
+
+.card span {
+    text-align: justify;
+    margin: 0 10px;
+    margin-bottom: 8px;
+    color: #696969;
+    color: RGBA(0,0,0,.70);
+    cursor: pointer;
+}
+
 .card h3 {
     text-align: justify;
     margin: 0 10px;
@@ -32,7 +43,11 @@
     text-align: justify;
     margin: 10px;
     color: #696969;
-    max-width: 300ch;
+    overflow: hidden;
+    position: relative;
+    line-height: 1.2em;
+    max-height: 6em; /* aqui vc controla a altura da caixa de texto */
+    text-align: justify;
 }
 .card a {  
     margin: 10px;

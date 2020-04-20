@@ -1,43 +1,48 @@
-import React from 'react'
-
+import React, { useState, useEffect } from 'react'
+import Moment from 'moment';
 import { useHistory } from "react-router-dom";
 
+import { firebaseFirestore } from '../../config/firebase';
 import './styles.css';
 
 function ListOccurrences() {
     const history = useHistory();
-    
-    function handleClickCard() {
-        history.push("/occurrence/1");
+    const [occurrences, setOccurrences] = useState([]);
+
+    useEffect(() => {
+        loadOccurrences();
+    }, []);
+
+    function loadOccurrences() {
+        firebaseFirestore.collection("occorrence").orderBy("date", "desc")
+            .get()
+            .then(function (querySnapshot) {
+                var tempOccurrences = [];
+                querySnapshot.forEach(function (docs) {
+                    tempOccurrences = [...tempOccurrences, { ...docs.data(), id: docs.id }];
+                });
+                setOccurrences(tempOccurrences);
+            })
+            .catch((error) => {
+                console.log('error', error.message);
+            });
     }
-    
+
+    function handleClickCard(id) {
+        history.push("/occurrence/" + id);
+    }
+
     return (
         <div className="list-occurrences-container">
-            
-            <div className = "card">
-                <img onClick={handleClickCard} src="https://cdn-istoedinheiro-ssl.akamaized.net/wp-content/uploads/sites/17/2020/03/cdbab406b5f84549439b68d43f62a7c31154c55a-768x432.jpg" alt="Logo" />
-                <h3 onClick={handleClickCard}>Acidente deixa três feridos próximo a rodoviária de Montes Claros.</h3>
-                <p>
-                    Aliquam arcu ex, ds imperdiet sit amet lorem. Cras maximus, a vulputate lacus lobortis a. Mauris vitae justo sit amet nisl luctus vulputate a vel ligula. Duis placerat tempus tellus, vitae aliquam velit condimentum ut ...
-                </p>
-            </div>
-            <div className = "card">
-                <img src="https://cdn-istoedinheiro-ssl.akamaized.net/wp-content/uploads/sites/17/2020/03/cdbab406b5f84549439b68d43f62a7c31154c55a-768x432.jpg" alt="Logo" />
-                <h3>Acidente deixa três feridos próximo a rodoviária de Montes Claros.</h3>
-                <p>
-                    Aliquam arcu ex, ds imperdiet sit amet lorem. Cras maximus, a vulputate lacus lobortis a. Mauris vitae justo sit amet nisl luctus vulputate a vel ligula. Duis placerat tempus tellus, vitae aliquam velit condimentum ut ...
-                </p>
-            </div>
-            <div className = "card">
-                <img src="https://cdn-istoedinheiro-ssl.akamaized.net/wp-content/uploads/sites/17/2020/03/cdbab406b5f84549439b68d43f62a7c31154c55a-768x432.jpg" alt="Logo" />
-                <h3>Acidente deixa três feridos próximo a rodoviária de Montes Claros.</h3>
-                <p>
-                    Aliquam arcu ex, ds imperdiet sit amet lorem. Cras maximus, a vulputate lacus lobortis a. Mauris vitae justo sit amet nisl luctus vulputate a vel ligula. Duis placerat tempus tellus, vitae aliquam velit condimentum ut ...
-                </p>
-            </div>
-            
+            {occurrences.map(occurrence => (
+                <div className="card" key={occurrence.id}>
+                    <img onClick={() => handleClickCard(occurrence.id)} src="https://i.em.com.br/Fdst2peHsPbETiGHXwWYI8dcIe0=/675x0/smart/imgsapp.em.com.br/app/noticia_127983242361/2020/04/18/1139958/20200418162728396739i.jpeg" alt="Logo" />
+                    <span>{Moment(occurrence.date).format('DD/MM/YYYY HH:MM')}</span>
+                    <h3 onClick={() => handleClickCard(occurrence.id)}>{occurrence.title}</h3>
+                    <p>{occurrence.description}</p>
+                </div>
+            ))}
         </div>
     );
 }
-
 export default ListOccurrences;
