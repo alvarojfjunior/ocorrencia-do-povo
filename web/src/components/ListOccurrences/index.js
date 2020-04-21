@@ -10,7 +10,7 @@ function ListOccurrences() {
     const [occurrences, setOccurrences] = useState([]);
 
     useEffect(() => {
-        loadOccurrences();
+        loadOccurrences()
     }, []);
 
     function loadOccurrences() {
@@ -19,7 +19,7 @@ function ListOccurrences() {
             .then(function (querySnapshot) {
                 var tempOccurrences = [];
                 querySnapshot.forEach(function (docs) {
-                    tempOccurrences = [...tempOccurrences, { ...docs.data(), id: docs.id }];
+                    tempOccurrences = [...tempOccurrences, { ...docs.data(), id: docs.id }];               
                 });
                 setOccurrences(tempOccurrences);
             })
@@ -36,7 +36,7 @@ function ListOccurrences() {
         <div className="list-occurrences-container">
             {occurrences.map(occurrence => (
                 <div className="card" key={occurrence.id}>
-                    <img onClick={() => handleClickCard(occurrence.id)} src="https://i.em.com.br/Fdst2peHsPbETiGHXwWYI8dcIe0=/675x0/smart/imgsapp.em.com.br/app/noticia_127983242361/2020/04/18/1139958/20200418162728396739i.jpeg" alt="Logo" />
+                    <img onClick={() => handleClickCard(occurrence.id)} src={occurrence.image1} alt="Image Occurrence" />
                     <span>{Moment(occurrence.date).format('DD/MM/YYYY HH:MM')}</span>
                     <h3 onClick={() => handleClickCard(occurrence.id)}>{occurrence.title}</h3>
                     <p>{occurrence.description}</p>

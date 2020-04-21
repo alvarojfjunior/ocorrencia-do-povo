@@ -14,9 +14,7 @@
     width: 100px;
     height: 100px;
     border-radius: 50px;
-    background:url("../../assets/dslr-camera.png") #642484 center no-repeat;
-    background-repeat: no-repeat;
-    background-size: 50px 50px;
+    background:url("../../assets/dslr-camera.png") #642484 center/70% no-repeat;
 }
 
 .post-container .carousel .item .input-upload {
