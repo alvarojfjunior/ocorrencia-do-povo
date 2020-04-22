@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import Carousel from 'react-elastic-carousel';
 
-import { firebaseStorage } from '../../config/firebase';
+import { UploadImage } from '../../helpers/FirebaseStorage';
+
 import { firebaseFirestore } from '../../config/firebase';
 import * as snackBarActions from '../../store/actions/snackbar';
 
@@ -29,111 +30,9 @@ function PostOccurrences(props) {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
-
-    function handleUploadImages(id) {
-        var count = 0;
-        if (URLImage1) {
-            count++;
-            //FAZ UPLOAD E SALVA CAMPO NO BANCO
-            const paste = `occurrences/${id}`;
-            const name = `${count}`;
-            const file = image1;
-            firebaseStorage.ref(`${paste}/${name}`).put(file)
-                .on("state_changed", () => {
-                    firebaseStorage
-                        .ref(paste)
-                        .child(name)
-                        .getDownloadURL()
-                        .then(url => {
-                            console.log('Salvou imagem no storage!')
-                            firebaseFirestore.collection('occorrence').doc(id).update({
-                                image1: url,
-                            })
-                            .then(e => {
-                                console.log('Alterou o campo com a imagem')
-                            })
-                        });
-                });
-        }
-
-
-
-        if (URLImage2) {
-            count++;
-            //FAZ UPLOAD E SALVA CAMPO NO BANCO
-            const paste = `occurrences/${id}`;
-            const name = `${count}`;
-            const file = image2;
-            firebaseStorage.ref(`${paste}/${name}`).put(file)
-                .on("state_changed", () => {
-                    firebaseStorage
-                        .ref(paste)
-                        .child(name)
-                        .getDownloadURL()
-                        .then(url => {
-                            console.log(`Url baixada: ${url}`);
-                            firebaseFirestore.collection('occorrence').doc(id).update({
-                                image2: url,
-                            })
-                                .then(e => {
-                                    console.log('Imagem salva no banco')
-                                })
-                        });
-                });
-        }
-
-        if (URLImage3) {
-            count++;
-            //FAZ UPLOAD E SALVA CAMPO NO BANCO
-            const paste = `occurrences/${id}`;
-            const name = `${count}`;
-            const file = image3;
-            firebaseStorage.ref(`${paste}/${name}`).put(file)
-                .on("state_changed", () => {
-                    firebaseStorage
-                        .ref(paste)
-                        .child(name)
-                        .getDownloadURL()
-                        .then(url => {
-                            console.log(`Url baixada: ${url}`);
-                            firebaseFirestore.collection('occorrence').doc(id).update({
-                                image3: url,
-                            })
-                                .then(e => {
-                                    console.log('Imagem salva no banco')
-                                })
-                        });
-                });
-        }
-
-        if (URLImage4) {
-            count++;
-            //FAZ UPLOAD E SALVA CAMPO NO BANCO
-            const paste = `occurrences/${id}`;
-            const name = `${count}`;
-            const file = image4;
-            firebaseStorage.ref(`${paste}/${name}`).put(file)
-                .on("state_changed", () => {
-                    firebaseStorage
-                        .ref(paste)
-                        .child(name)
-                        .getDownloadURL()
-                        .then(url => {
-                            console.log(`Url baixada: ${url}`);
-                            firebaseFirestore.collection('occorrence').doc(id).update({
-                                image4: url,
-                            })
-                                .then(e => {
-                                    console.log('Imagem salva no banco')
-                                })
-                        });
-                });
-        }
-    }
-
-    async function handlePostOccurrence(e) {
+    const handlePostOccurrence = async (e) => {
         e.preventDefault();
-        firebaseFirestore.collection('occorrence').add({
+        const resultFirestoreAdd = await firebaseFirestore.collection('occorrence').add({
             userName,
             title,
             description,
@@ -142,19 +41,13 @@ function PostOccurrences(props) {
             image3: '',
             image4: '',
             date: Date.now(),
-        }).then((docRef) => {
-            console.log('Salvou registro!');
-            handleUploadImages(docRef.id);
-            // GAMBIARA //
-            setTimeout(() => {
-                props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Pronto!'));
-                history.push("/");
-            }, 2500); 
-            
-        }).catch(error => {
-            console.log(error.message)
-            props.dispatch(snackBarActions.setSnackbar(true, 'error', 'Erro ao cadastrar, tente mais tarde.'));
         });
+        const resultStorage = await UploadImage(`occurrences/${resultFirestoreAdd.id}`, '01', image1);
+        const resultStorageUpdate = await firebaseFirestore.collection('occorrence').doc(resultFirestoreAdd.id).update({
+            image1: resultStorage,
+        });
+        props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Pronto!'));
+        history.push("/");
     }
 
     return (
@@ -198,7 +91,7 @@ function PostOccurrences(props) {
                     <div className="item" style={URLImage4 ? { background: `url(${URLImage4}) #642484 center/100% no-repeat` } : {}}>
                         <input
                             type="file"
-                            accept="image/*"
+                            accept="file_extension|video/*|image/*|media_type"
                             className="input-upload"
                             onChange={e => {
                                 setImage4(e.target.files[0]);

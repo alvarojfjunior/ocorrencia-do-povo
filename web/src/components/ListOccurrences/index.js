@@ -37,6 +37,7 @@ function ListOccurrences() {
             {occurrences.map(occurrence => (
                 <div className="card" key={occurrence.id}>
                     <img onClick={() => handleClickCard(occurrence.id)} src={occurrence.image1} alt="Image Occurrence" />
+                    <br></br>
                     <span>{Moment(occurrence.date).format('DD/MM/YYYY HH:MM')}</span>
                     <h3 onClick={() => handleClickCard(occurrence.id)}>{occurrence.title}</h3>
                     <p>{occurrence.description}</p>
