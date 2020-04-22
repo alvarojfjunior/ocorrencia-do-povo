@@ -2,6 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Moment from 'moment';
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
+import {
+    WhatsappShareButton,
+    WhatsappIcon,
+    FacebookShareButton,
+    FacebookIcon,
+} from "react-share";
+
 
 import { firebaseFirestore } from '../../config/firebase';
 import * as snackBarActions from '../../store/actions/snackbar';
@@ -52,7 +59,7 @@ function Occurrence(props) {
                 props.dispatch(snackBarActions.setSnackbar(true, 'error', 'Senha incorreta'));
                 return;
             }
-            
+
         } catch (error) {
 
         }
@@ -77,12 +84,36 @@ function Occurrence(props) {
         <div>
             <AppBar></AppBar>
             <div className="occurrence-container">
-                <span onClick={() =>setCount(count + 1)}>{occurrence.userName} - {Moment(occurrence.date).format('DD/MM/YYYY HH:MM')}</span>
+                <span onClick={() => setCount(count + 1)}>{occurrence.userName} - {Moment(occurrence.date).format('DD/MM/YYYY HH:MM')}</span>
                 <h2>{occurrence.title}</h2>
                 <p>{occurrence.description}</p>
+                <div className="share-container">
+                    <div>
+                        <span >Compartilhar</span>
+                        <WhatsappShareButton
+                            className="share-button"
+                            windowWidth="1000"
+                            windowHeight="800"
+                            children={<WhatsappIcon size={32} round={true} />}
+                            url={window.location.href}
+                            title={occurrence.title}
+                        />
+                        <FacebookShareButton
+                            className="share-button"
+                            windowWidth="1000"
+                            windowHeight="800"
+                            children={<FacebookIcon size={32} round={true} />}
+                            url={window.location.href}
+                            quote={occurrence.title}
+                        />
+
+
+                    </div>
+                </div>
                 <img src={occurrence.image1} alt="Occurrence" />
             </div>
         </div>
+
     );
 }
 

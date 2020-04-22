@@ -75,7 +75,10 @@ function PostOccurrences(props) {
             <div className="post-container">
                 <h3>Conte ao povo o que acontece na sua região!</h3>
                 <label htmlFor="fname">Imagens e vídeos</label>
-                <Carousel itemsToScroll={2} itemsToShow={2} className="carousel">
+                <Carousel 
+                    itemsToScroll={2} 
+                    itemsToShow={2} 
+                    className="carousel">
                     <div className="item" style={URLImage1 ? { background: `url(${URLImage1}) #642484 center/100% no-repeat` } : {}}>
                         <input
                             type="file"

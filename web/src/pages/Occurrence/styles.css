@@ -35,6 +35,26 @@
     color: RGBA(0,0,0,.70);
 }
 
+.occurrence-container .share-container {
+    margin: 10px auto;
+    display: flex;
+    align-items: center; /* Alinhamento vertical dos filhos */
+    justify-content: flex-end; /* Tipo de espaçamento */
+}
+
+.occurrence-container .share-container div {
+    display: flex;
+}
+
+.occurrence-container .share-container div span {
+    color: RGBA(0,0,0,.90);
+    margin-right: 10px;
+}
+
+.occurrence-container .share-container div .share-button {
+    margin-right: 5px;
+}
+
 .occurrence-container p {
     text-align: justify;
     color: RGBA(0,0,0,.70);

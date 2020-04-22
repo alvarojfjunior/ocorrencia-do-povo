@@ -7,6 +7,12 @@ import ListOccurrences from '../../components/ListOccurrences';
 import AppBar from '../../components/AppBar';
 
 function Main(props) {
+
+    const handleAddToHomescreenClick = () => {
+        alert(`
+          1. Open Share menu
+          2. Tap on "Add to Home Screen" button`);
+    };
     return (
         <div>
             <AppBar></AppBar>
