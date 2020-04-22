@@ -19,7 +19,7 @@ function ListOccurrences() {
             .then(function (querySnapshot) {
                 var tempOccurrences = [];
                 querySnapshot.forEach(function (docs) {
-                    tempOccurrences = [...tempOccurrences, { ...docs.data(), id: docs.id }];               
+                    tempOccurrences = [...tempOccurrences, { ...docs.data(), id: docs.id }];
                 });
                 setOccurrences(tempOccurrences);
             })
@@ -36,9 +36,13 @@ function ListOccurrences() {
         <div className="list-occurrences-container">
             {occurrences.map(occurrence => (
                 <div className="card" key={occurrence.id}>
-                    <img onClick={() => handleClickCard(occurrence.id)} src={occurrence.image1} alt="Image Occurrence" />
+                    <div className="image-container" onClick={() => handleClickCard(occurrence.id)}>
+                        <img src={occurrence.image1} alt="Image Occurrence" />
+                    </div>
                     <br></br>
                     <span>{Moment(occurrence.date).format('DD/MM/YYYY HH:MM')}</span>
+                    <br />
+                    <span>{occurrence.userName}</span>
                     <h3 onClick={() => handleClickCard(occurrence.id)}>{occurrence.title}</h3>
                     <p>{occurrence.description}</p>
                 </div>

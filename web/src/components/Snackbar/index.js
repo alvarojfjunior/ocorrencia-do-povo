@@ -6,7 +6,6 @@ import * as snackBarActions from '../../store/actions/snackbar';
 import './styles.css';
 
 function Snackbar(props) {
-
     if (props.state.snackbar.visible) {
         setTimeout(() => {
             props.dispatch(snackBarActions.setSnackbar(false)); 
@@ -20,7 +19,7 @@ function Snackbar(props) {
 
     return (
         <div className="snackbar-container" style={props.state.snackbar.visible ? {height: "50px"} : {height: "0px"}}>
-            <span>Pronto!</span>
+            <span>{props.state.snackbar.message}</span>
 	        <button onClick={handleCloseSnackBar}>OK</button>
         </div>
     );

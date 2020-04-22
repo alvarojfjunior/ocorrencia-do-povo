@@ -14,6 +14,9 @@ import AppBar from '../../components/AppBar';
 
 function PostOccurrences(props) {
     const history = useHistory();
+
+    const [loading, setLoading] = useState(false);
+
     const [image1, setImage1] = useState({});
     const [URLImage1, setURLImage1] = useState('');
 
@@ -32,28 +35,43 @@ function PostOccurrences(props) {
 
     const handlePostOccurrence = async (e) => {
         e.preventDefault();
-        const resultFirestoreAdd = await firebaseFirestore.collection('occorrence').add({
-            userName,
-            title,
-            description,
-            image1: '',
-            image2: '',
-            image3: '',
-            image4: '',
-            date: Date.now(),
-        });
-        const resultStorage = await UploadImage(`occurrences/${resultFirestoreAdd.id}`, '01', image1);
-        const resultStorageUpdate = await firebaseFirestore.collection('occorrence').doc(resultFirestoreAdd.id).update({
-            image1: resultStorage,
-        });
-        props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Pronto!'));
-        history.push("/");
+        if (!URLImage1) {
+            props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Insira pelo menos uma Imagem!'));
+            return;
+        }
+        try {
+            setLoading(true);
+            const resultFirestoreAdd = await firebaseFirestore.collection('occorrence').add({
+                userName,
+                title,
+                description,
+                image1: '',
+                image2: '',
+                image3: '',
+                image4: '',
+                date: Date.now(),
+            });
+            const resultStorage = await UploadImage(`occurrences/${resultFirestoreAdd.id}`, '01', image1);
+            const resultStorageUpdate = await firebaseFirestore.collection('occorrence').doc(resultFirestoreAdd.id).update({
+                image1: resultStorage,
+            });
+            setLoading(false);
+            props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Ocorrência cadastrada!'));
+            history.push("/");
+        } catch (error) {
+            props.dispatch(snackBarActions.setSnackbar(true, 'error', error));
+        }
+
     }
 
-    return (
+    if (loading) return (
+        <div className="post-container" style={{textAlign:'center', color:'white', backgroundColor: '#642484'}}>
+            <h1> Carregando ... </h1>
+        </div>)
+
+    else return (
         <div>
             <AppBar btnPostVisible={false}></AppBar>
-
             <div className="post-container">
                 <h3>Conte ao povo o que acontece na sua região!</h3>
                 <label htmlFor="fname">Imagens e vídeos</label>
@@ -121,7 +139,6 @@ function PostOccurrences(props) {
                         value={description}
                         onChange={e => setDescription(e.target.value)}
                         placeholder="Hoje pela menhã houve um acidente no bairro Funcionários envolvendo dois carros ..." />
-
                     <input type="submit" value="Postar!" />
                 </form>
             </div>

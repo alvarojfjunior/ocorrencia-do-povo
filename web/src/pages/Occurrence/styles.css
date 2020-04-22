@@ -1,15 +1,35 @@
 .occurrence-container {
+    max-width: 900px;
     padding: 10px;
     margin: 0 auto;
-    max-width: 100%;
     color: #696969;
+}
+
+.occurrence-container .buttons-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.occurrence-container .buttons-container button {
+    color: white;
+    background-color: red;
+    font-size: 15px;
+    padding: 5px;
+    border-radius: 10px;
 }
 
 .occurrence-container img {
     width: 100%;
+    border-radius: 10px;
 }
 
 .occurrence-container h2 {
+    text-align: justify;
+    margin: 5px auto;
+    color: RGBA(0,0,0,.70);
+}
+
+.occurrence-container span {
     text-align: justify;
     margin: 5px auto;
     color: RGBA(0,0,0,.70);
