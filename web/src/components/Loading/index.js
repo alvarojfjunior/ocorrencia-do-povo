@@ -9,7 +9,7 @@ function AppBar(props) {
     return (
         <div className="loading-container">
             <img src={logo}/>
-            <div class="spinner dotted"></div>
+            <div className="spinner dotted"></div>
         </div>
     );
 }
