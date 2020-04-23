@@ -75,7 +75,7 @@
 }
   
 .post-container input[type=submit]:hover {
-    background-color: #45a049;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 @media screen and (max-width: 580px) {

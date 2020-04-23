@@ -157,7 +157,7 @@ function PostOccurrences(props) {
                         value={title}
                         onChange={e => setTitle(e.target.value)}
                         type="text"
-                        placeholder="Acidente entre dois carros no bairro Funcionários." />
+                        placeholder="Acidente entre dois carros no bairro..." />
                     <label htmlFor="lname">Descrição da Ocorrência</label>
                     <textarea
                         required
