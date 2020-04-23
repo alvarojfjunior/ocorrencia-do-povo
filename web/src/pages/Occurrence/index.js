@@ -114,11 +114,11 @@ function Occurrence(props) {
 
                     </div>
                 </div>
-                <img src={occurrence.image1} alt="Occurrence" />
-                <img src={occurrence.image2} alt="Occurrence" />
-                <img src={occurrence.image3} alt="Occurrence" />
-                <img src={occurrence.image4} alt="Occurrence" />
-                <source src={occurrence.image1} type="video/mp4" />
+                {occurrence.image1 ? <img src={occurrence.image1} /> : <></>}
+                {occurrence.image2 ? <img src={occurrence.image2} /> : <></>}
+                {occurrence.image3 ? <img src={occurrence.image3} /> : <></>}
+                {occurrence.image4 ? <img src={occurrence.image4} /> : <></>}
+            
             </div>
         </div>
 

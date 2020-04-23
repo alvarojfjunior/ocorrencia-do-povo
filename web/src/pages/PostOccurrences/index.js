@@ -7,6 +7,7 @@ import { UploadImage } from '../../helpers/FirebaseStorage';
 
 import { firebaseFirestore } from '../../config/firebase';
 import * as snackBarActions from '../../store/actions/snackbar';
+import * as loadingActions from '../../store/actions/loading';
 
 import './styles.css';
 
@@ -14,7 +15,6 @@ import AppBar from '../../components/AppBar';
 
 function PostOccurrences(props) {
     const history = useHistory();
-    const [loading, setLoading] = useState(false);
 
     const [image1, setImage1] = useState({});
     const [URLImage1, setURLImage1] = useState('');
@@ -39,7 +39,7 @@ function PostOccurrences(props) {
             return;
         }
         try {
-            setLoading(true);
+            props.dispatch(loadingActions.setLoading(true, 'Postando ...'));
             const resultFirestoreAdd = await firebaseFirestore.collection('occorrence').add({
                 userName,
                 title,
@@ -52,7 +52,7 @@ function PostOccurrences(props) {
             });
             var count = 0;
             if (URLImage1) {
-                count ++;
+                count++;
                 const resultStorage = await UploadImage(`occurrences/${resultFirestoreAdd.id}`, `0${count}`, image1);
                 const resultStorageUpdate = await firebaseFirestore.collection('occorrence').doc(resultFirestoreAdd.id).update({
                     image1: resultStorage,
@@ -60,7 +60,7 @@ function PostOccurrences(props) {
             }
 
             if (URLImage2) {
-                count ++;
+                count++;
                 const resultStorage = await UploadImage(`occurrences/${resultFirestoreAdd.id}`, `0${count}`, image2);
                 const resultStorageUpdate = await firebaseFirestore.collection('occorrence').doc(resultFirestoreAdd.id).update({
                     image2: resultStorage,
@@ -68,7 +68,7 @@ function PostOccurrences(props) {
             }
 
             if (URLImage3) {
-                count ++;
+                count++;
                 const resultStorage = await UploadImage(`occurrences/${resultFirestoreAdd.id}`, `0${count}`, image3);
                 const resultStorageUpdate = await firebaseFirestore.collection('occorrence').doc(resultFirestoreAdd.id).update({
                     image3: resultStorage,
@@ -76,16 +76,14 @@ function PostOccurrences(props) {
             }
 
             if (URLImage4) {
-                count ++;
+                count++;
                 const resultStorage = await UploadImage(`occurrences/${resultFirestoreAdd.id}`, `0${count}`, image4);
                 const resultStorageUpdate = await firebaseFirestore.collection('occorrence').doc(resultFirestoreAdd.id).update({
                     image4: resultStorage,
                 });
             }
 
-
-
-            setLoading(false);
+            props.dispatch(loadingActions.setLoading(false, ''));
             props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Ocorrência cadastrada!'));
             history.push("/");
         } catch (error) {
@@ -93,13 +91,7 @@ function PostOccurrences(props) {
         }
 
     }
-
-    if (loading) return (
-        <div className="post-container" style={{ textAlign: 'center', color: 'white', backgroundColor: '#642484' }}>
-            <h1> Carregando ... </h1>
-        </div>)
-
-    else return (
+    return (
         <div>
             <AppBar btnPostVisible={false}></AppBar>
             <div className="post-container">
