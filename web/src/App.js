@@ -8,20 +8,15 @@ import './global.css';
 
 import store from './store';
 import Snackbar from './components/Snackbar';
-import Loading from './components/Loading';
+
 
 
 
 function App() {
   return (
     <Provider store={store}>
-      {
-        store.getState().loading.visible ? <Loading /> :
-          <div>
-            <Routes></Routes>
-            <Snackbar></Snackbar>
-          </div>
-      }
+      <Routes></Routes>
+      <Snackbar></Snackbar>
     </Provider>
   );
 }
