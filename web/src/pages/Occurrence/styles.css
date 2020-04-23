@@ -39,7 +39,8 @@
     margin: 10px auto;
     display: flex;
     align-items: center; /* Alinhamento vertical dos filhos */
-    justify-content: flex-end; /* Tipo de espaçamento */
+    flex-wrap: wrap;
+    justify-content: space-between; /* Tipo de espaçamento */
 }
 
 .occurrence-container .share-container div {

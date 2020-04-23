@@ -28,22 +28,18 @@ function ListOccurrences() {
             });
     }
 
-    function handleClickCard(id) {
-        history.push("/occurrence/" + id);
-    }
-
     return (
         <div className="list-occurrences-container">
             {occurrences.map(occurrence => (
-                <div className="card" key={occurrence.id}>
-                    <div className="image-container" onClick={() => handleClickCard(occurrence.id)}>
+                <div className="card" key={occurrence.id} onClick={() => history.push("/occurrence/" + occurrence.id)}>
+                    <div className="image-container">
                         <img src={occurrence.image1} alt="Image Occurrence" />
                     </div>
                     <br></br>
                     <span>{Moment(occurrence.date).format('DD/MM/YYYY HH:MM')}</span>
                     <br />
                     <span>{occurrence.userName}</span>
-                    <h3 onClick={() => handleClickCard(occurrence.id)}>{occurrence.title}</h3>
+                    <h3>{occurrence.title}</h3>
                     <p>{occurrence.description}</p>
                 </div>
             ))}

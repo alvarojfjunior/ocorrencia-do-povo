@@ -2,7 +2,6 @@ import React from 'react';
 
 import Routes from './routes';
 import { Provider } from 'react-redux';
-import AddToHomescreen from 'react-add-to-homescreen';
 
 import './global.css';
 

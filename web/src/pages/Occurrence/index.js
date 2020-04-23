@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Moment from 'moment';
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
+import ReactPlayer from 'react-player'
 import {
     WhatsappShareButton,
     WhatsappIcon,
@@ -84,10 +85,13 @@ function Occurrence(props) {
         <div>
             <AppBar></AppBar>
             <div className="occurrence-container">
-                <span onClick={() => setCount(count + 1)}>{occurrence.userName} - {Moment(occurrence.date).format('DD/MM/YYYY HH:MM')}</span>
                 <h2>{occurrence.title}</h2>
                 <p>{occurrence.description}</p>
+
                 <div className="share-container">
+                    <div>
+                        <span onClick={() => setCount(count + 1)}>{occurrence.userName} - {Moment(occurrence.date).format('DD/MM/YYYY HH:MM')}</span>
+                    </div>
                     <div>
                         <span >Compartilhar</span>
                         <WhatsappShareButton
@@ -111,6 +115,10 @@ function Occurrence(props) {
                     </div>
                 </div>
                 <img src={occurrence.image1} alt="Occurrence" />
+                <img src={occurrence.image2} alt="Occurrence" />
+                <img src={occurrence.image3} alt="Occurrence" />
+                <img src={occurrence.image4} alt="Occurrence" />
+                <source src={occurrence.image1} type="video/mp4" />
             </div>
         </div>
 

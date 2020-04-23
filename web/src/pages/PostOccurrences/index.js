@@ -14,7 +14,6 @@ import AppBar from '../../components/AppBar';
 
 function PostOccurrences(props) {
     const history = useHistory();
-
     const [loading, setLoading] = useState(false);
 
     const [image1, setImage1] = useState({});
@@ -51,10 +50,41 @@ function PostOccurrences(props) {
                 image4: '',
                 date: Date.now(),
             });
-            const resultStorage = await UploadImage(`occurrences/${resultFirestoreAdd.id}`, '01', image1);
-            const resultStorageUpdate = await firebaseFirestore.collection('occorrence').doc(resultFirestoreAdd.id).update({
-                image1: resultStorage,
-            });
+            var count = 0;
+            if (URLImage1) {
+                count ++;
+                const resultStorage = await UploadImage(`occurrences/${resultFirestoreAdd.id}`, `0${count}`, image1);
+                const resultStorageUpdate = await firebaseFirestore.collection('occorrence').doc(resultFirestoreAdd.id).update({
+                    image1: resultStorage,
+                });
+            }
+
+            if (URLImage2) {
+                count ++;
+                const resultStorage = await UploadImage(`occurrences/${resultFirestoreAdd.id}`, `0${count}`, image2);
+                const resultStorageUpdate = await firebaseFirestore.collection('occorrence').doc(resultFirestoreAdd.id).update({
+                    image2: resultStorage,
+                });
+            }
+
+            if (URLImage3) {
+                count ++;
+                const resultStorage = await UploadImage(`occurrences/${resultFirestoreAdd.id}`, `0${count}`, image3);
+                const resultStorageUpdate = await firebaseFirestore.collection('occorrence').doc(resultFirestoreAdd.id).update({
+                    image3: resultStorage,
+                });
+            }
+
+            if (URLImage4) {
+                count ++;
+                const resultStorage = await UploadImage(`occurrences/${resultFirestoreAdd.id}`, `0${count}`, image4);
+                const resultStorageUpdate = await firebaseFirestore.collection('occorrence').doc(resultFirestoreAdd.id).update({
+                    image4: resultStorage,
+                });
+            }
+
+
+
             setLoading(false);
             props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Ocorrência cadastrada!'));
             history.push("/");
@@ -65,7 +95,7 @@ function PostOccurrences(props) {
     }
 
     if (loading) return (
-        <div className="post-container" style={{textAlign:'center', color:'white', backgroundColor: '#642484'}}>
+        <div className="post-container" style={{ textAlign: 'center', color: 'white', backgroundColor: '#642484' }}>
             <h1> Carregando ... </h1>
         </div>)
 
@@ -75,9 +105,9 @@ function PostOccurrences(props) {
             <div className="post-container">
                 <h3>Conte ao povo o que acontece na sua região!</h3>
                 <label htmlFor="fname">Imagens e vídeos</label>
-                <Carousel 
-                    itemsToScroll={2} 
-                    itemsToShow={2} 
+                <Carousel
+                    itemsToScroll={2}
+                    itemsToShow={2}
                     className="carousel">
                     <div className="item" style={URLImage1 ? { background: `url(${URLImage1}) #642484 center/100% no-repeat` } : {}}>
                         <input
@@ -112,7 +142,7 @@ function PostOccurrences(props) {
                     <div className="item" style={URLImage4 ? { background: `url(${URLImage4}) #642484 center/100% no-repeat` } : {}}>
                         <input
                             type="file"
-                            accept="file_extension|video/*|image/*|media_type"
+                            accept="image/*"
                             className="input-upload"
                             onChange={e => {
                                 setImage4(e.target.files[0]);
