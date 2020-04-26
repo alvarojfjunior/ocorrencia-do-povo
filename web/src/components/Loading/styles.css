@@ -1,48 +1,8 @@
 .loading-container {
-    display: block; /* Filhos ficam inline */
-    align-items: center; /* Alinhamento vertical dos filhos */
-    justify-content: center; /* Tipo de espaçamento */
-    flex-wrap: wrap; /* Caso precise, quebra linha */
-    background-color: #642484;
-    color: white;
-    text-align: center;
-    height: 100%;
-    width: 100%;
-    z-index:9999;
+  position: fixed;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index:9999;
 }
-
-.loading-container img {
-    margin-top: 50px;
-    max-width: 300px;
-}
-
-.loading-container .spinner {
-    width:32px;
-    height:32px;
-    border-radius:32px;
-    box-sizing:border-box;
-    border:2px groove white;
-    position:absolute;
-    margin:-16px 0px 0px -16px;
-    left:50%;
-    border-top-color:rgba(255,255,255,1);
-    border-left-color:rgba(255,255,255,0.9);
-    border-bottom-color:rgba(255,255,255,0.8);
-    border-right-color:rgba(255,255,255,0.7);
-    animation: rotate 1000ms infinite linear;
-    transform:translateZ(0px);
-  }
-
-  .loading-container .dotted {
-    width:64px;
-    height:64px;
-    margin:32px 0px 0px -32px;
-    border-width:8px;
-    border-style:dotted;
-    animation: rotate 1000ms infinite steps(12,end), linear;
-  }
-
-  @keyframes rotate {  
-    0% {transform:rotate(0deg);}
-    100% {transform:rotate(360deg);} 
-  }

@@ -1,15 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import ClipLoader from "react-spinners/ClipLoader";
 import { connect } from 'react-redux';
 
-import logo from '../../assets/logo.png';
 import './styles.css';
 
 function AppBar(props) {
     return (
-        <div className="loading-container">
-            <img src={logo}/>
-            <div className="spinner dotted"></div>
+        <div className="loading-container" style={props.state.loading.visible ? {height: '100%'} : {height: '0'}}>
+            <ClipLoader
+                className="spinner"
+                size={200}
+                color={"#642484"}
+                loading={props.state.loading.visible}
+            />
         </div>
     );
 }

@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Moment from 'moment';
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
-import ReactPlayer from 'react-player'
+import { Slide } from 'react-slideshow-image';
+
+import * as loadingActions from '../../store/actions/loading';
+
 import {
     WhatsappShareButton,
     WhatsappIcon,
@@ -22,9 +25,18 @@ function Occurrence(props) {
 
     const [occurrence, setOccurrence] = useState({});
 
-
     const [count, setCount] = useState(0);
     const [senha, setSenha] = useState('');
+
+    const [slideImages, setSlideImages] = useState([]);
+    const slideProperties = {
+        duration: 5000,
+        transitionDuration: 500,
+        infinite: true,
+        indicators: true,
+        scale: 0.4,
+        arrows: true
+    }
 
     useEffect(() => {
         const { id } = props.match.params;
@@ -33,17 +45,30 @@ function Occurrence(props) {
 
 
     function loadOccurrence(id) {
+        props.dispatch(loadingActions.setLoading(true, ''));
         var tempOccorrence;
         firebaseFirestore.collection("occorrence").doc(id)
             .get()
             .then(function (doc) {
                 tempOccorrence = { ...doc.data(), id: doc.id };
                 setOccurrence(tempOccorrence);
+                if (tempOccorrence.image1)
+                    setSlideImages([...slideImages,tempOccorrence.image1])
+                if (tempOccorrence.image2)
+                    setSlideImages([...slideImages, tempOccorrence.image2])
+                if (tempOccorrence.image3)
+                    setSlideImages([...slideImages, tempOccorrence.image3])
+                if (tempOccorrence.image4)
+                    setSlideImages([...slideImages, tempOccorrence.image4])
+                setTimeout(() => {
+                    props.dispatch(loadingActions.setLoading(false, ''));
+                }, 500);
             })
             .catch((error) => {
                 console.log('error', error.message);
             });
     }
+
 
     const handleDelete = async (id) => {
         try {
@@ -53,8 +78,8 @@ function Occurrence(props) {
                     props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'ocorrência deletada!'));
                     history.push("/");
                 } catch (error) {
-                    props.dispatch(snackBarActions.setSnackbar(true, 'succes', error));
                     setCount(0);
+                    props.dispatch(snackBarActions.setSnackbar(true, 'succes', error));
                 }
             } else {
                 props.dispatch(snackBarActions.setSnackbar(true, 'error', 'Senha incorreta'));
@@ -65,7 +90,6 @@ function Occurrence(props) {
 
         }
     }
-
     if (count > 5)
         return (
             <div>
@@ -85,9 +109,14 @@ function Occurrence(props) {
         <div>
             <AppBar></AppBar>
             <div className="occurrence-container">
+                <div className="slide-container">
+                    <Slide {...slideProperties}> {
+                        slideImages.map((each, index) => <img key={index} style={{ width: "100%" }} src={each} />)
+                    }
+                    </Slide>
+                </div>
                 <h2>{occurrence.title}</h2>
                 <p>{occurrence.description}</p>
-
                 <div className="share-container">
                     <div>
                         <span onClick={() => setCount(count + 1)}>{occurrence.userName} - {Moment(occurrence.date).format('DD/MM/YYYY HH:MM')}</span>
@@ -110,15 +139,9 @@ function Occurrence(props) {
                             url={window.location.href}
                             quote={occurrence.title}
                         />
-
-
                     </div>
                 </div>
-                {occurrence.image1 ? <img src={occurrence.image1} /> : <></>}
-                {occurrence.image2 ? <img src={occurrence.image2} /> : <></>}
-                {occurrence.image3 ? <img src={occurrence.image3} /> : <></>}
-                {occurrence.image4 ? <img src={occurrence.image4} /> : <></>}
-            
+
             </div>
         </div>
 

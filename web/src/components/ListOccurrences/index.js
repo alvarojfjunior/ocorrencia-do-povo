@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react'
 import Moment from 'moment';
 import ClipLoader from "react-spinners/ClipLoader";
 import { useHistory } from "react-router-dom";
+import { connect } from 'react-redux';
+
+
+import * as loadingActions from '../../store/actions/loading';
 
 import { firebaseFirestore } from '../../config/firebase';
 import './styles.css';
 
-function ListOccurrences() {
+function ListOccurrences(props) {
     const history = useHistory();
     const [occurrences, setOccurrences] = useState([]);
     const [spinner, setSpinner] = useState(true);
@@ -14,9 +18,11 @@ function ListOccurrences() {
 
     useEffect(() => {
         loadOccurrences()
+        console.log('teste')
     }, []);
 
     function loadOccurrences() {
+        props.dispatch(loadingActions.setLoading(true, ''));
         firebaseFirestore.collection("occorrence").orderBy("date", "desc")
             .get()
             .then(function (querySnapshot) {
@@ -25,13 +31,15 @@ function ListOccurrences() {
                     tempOccurrences = [...tempOccurrences, { ...docs.data(), id: docs.id }];
                 });
                 setOccurrences(tempOccurrences);
+                props.dispatch(loadingActions.setLoading(false, ''));
                 setTimeout(() => {
                     setSpinner(false);
-                }, 1000); 
+                }, 500);
             })
             .catch((error) => {
                 console.log('error', error.message);
             });
+            
     }
 
     return (
@@ -40,15 +48,16 @@ function ListOccurrences() {
                 <div className="card" key={occurrence.id} onClick={() => history.push("/occurrence/" + occurrence.id)}>
                     <div className="image-container" style={{ background: `url(${occurrence.image1}) center/100% no-repeat` }} >
                         <ClipLoader
-                            size={150}
-                            color={"#123abc"}
+                            className="spinner"
+                            size={100}
+                            color={"#642484"}
                             loading={spinner}
                         />
                     </div>
                     <br></br>
                     <span>{Moment(occurrence.date).format('DD/MM/YYYY HH:MM')}</span>
                     <br />
-                    <span>{occurrence.userName}</span>
+                    <span>Lançado por {occurrence.userName}</span>
                     <h3>{occurrence.title}</h3>
                     <p>{occurrence.description}</p>
                 </div>
@@ -56,4 +65,4 @@ function ListOccurrences() {
         </div>
     );
 }
-export default ListOccurrences;
+export default connect(state => ({ state }))(ListOccurrences);

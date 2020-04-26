@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import Carousel from 'react-elastic-carousel';
 
 import { UploadImage } from '../../helpers/FirebaseStorage';
-
 import { firebaseFirestore } from '../../config/firebase';
 import * as snackBarActions from '../../store/actions/snackbar';
 import * as loadingActions from '../../store/actions/loading';

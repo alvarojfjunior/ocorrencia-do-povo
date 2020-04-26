@@ -3,7 +3,7 @@ const INITIAL_STATE =  {
     style: '',
     message: '',
 }
-export default function user(state = INITIAL_STATE, action) {
+export default function snackbar(state = INITIAL_STATE, action) {
     if (action.type === 'SET_SNACKBAR') {
         return {
             ...state, 
