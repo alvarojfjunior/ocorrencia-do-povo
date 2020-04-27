@@ -33,7 +33,7 @@ function PostOccurrences(props) {
 
     const handlePostOccurrence = async (e) => {
         e.preventDefault();
-        if (count <= 0) {
+        if ((!URLImage1) && (!URLImage2) && (!URLImage3) && (!URLImage4)) {
             props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Insira pelo menos uma Imagem!'));
             return;
         }
@@ -50,6 +50,7 @@ function PostOccurrences(props) {
                 date: Date.now(),
             });
             var count = 0;
+            var fieldName = '';
             if (URLImage1) {
                 count++;
                 const resultStorage = await UploadImage(`occurrences/${resultFirestoreAdd.id}`, `0${count}`, image1);
@@ -62,7 +63,7 @@ function PostOccurrences(props) {
                 count++;
                 const resultStorage = await UploadImage(`occurrences/${resultFirestoreAdd.id}`, `0${count}`, image2);
                 const resultStorageUpdate = await firebaseFirestore.collection('occorrence').doc(resultFirestoreAdd.id).update({
-                    image2: resultStorage,
+                    image2 : resultStorage,
                 });
             }
 

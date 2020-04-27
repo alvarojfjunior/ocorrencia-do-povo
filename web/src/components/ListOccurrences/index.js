@@ -18,7 +18,6 @@ function ListOccurrences(props) {
 
     useEffect(() => {
         loadOccurrences()
-        console.log('teste')
     }, []);
 
     function loadOccurrences() {
@@ -39,14 +38,23 @@ function ListOccurrences(props) {
             .catch((error) => {
                 console.log('error', error.message);
             });
-            
     }
 
-    return (
+
+    function getMainImage(occurrence) {
+        if (occurrence.image1) return occurrence.image1
+        else if (occurrence.image2) return occurrence.image2
+        else if (occurrence.image3) return occurrence.image3
+        else if (occurrence.image4) return occurrence.image4
+    }
+
+    if (occurrences.length <= 0) return (<></>)
+
+    else return (
         <div className="list-occurrences-container">
             {occurrences.map(occurrence => (
                 <div className="card" key={occurrence.id} onClick={() => history.push("/occurrence/" + occurrence.id)}>
-                    <div className="image-container" style={{ background: `url(${occurrence.image1}) center/100% no-repeat` }} >
+                    <div className="image-container" style={{ background: `url(${getMainImage(occurrence)}) center/100% no-repeat` }} >
                         <ClipLoader
                             className="spinner"
                             size={100}

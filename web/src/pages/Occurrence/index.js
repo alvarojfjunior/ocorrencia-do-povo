@@ -56,9 +56,8 @@ function Occurrence(props) {
             tempImages.push(tempOccorrence.image3);
         if (tempOccorrence.image4)
             tempImages.push(tempOccorrence.image4);
-
+        
         tempImages.shift();
-        console.log(tempImages);
 
         setSlideImages(tempImages);
         setOccurrence(tempOccorrence);
