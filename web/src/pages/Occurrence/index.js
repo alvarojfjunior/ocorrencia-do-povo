@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Moment from 'moment';
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
-import { Slide } from 'react-slideshow-image';
+import { Slide, Fade } from 'react-slideshow-image';
 
+import logo from '../../assets/logo.png';
 import * as loadingActions from '../../store/actions/loading';
 
 import {
@@ -32,10 +33,8 @@ function Occurrence(props) {
     const slideProperties = {
         duration: 5000,
         transitionDuration: 500,
-        infinite: true,
-        indicators: true,
-        scale: 0.4,
-        arrows: true
+        infinite: false,
+        indicators: true
     }
 
     useEffect(() => {
@@ -44,29 +43,26 @@ function Occurrence(props) {
     }, []);
 
 
-    function loadOccurrence(id) {
+    async function loadOccurrence(id) {
         props.dispatch(loadingActions.setLoading(true, ''));
-        var tempOccorrence;
-        firebaseFirestore.collection("occorrence").doc(id)
-            .get()
-            .then(function (doc) {
-                tempOccorrence = { ...doc.data(), id: doc.id };
-                setOccurrence(tempOccorrence);
-                if (tempOccorrence.image1)
-                    setSlideImages([...slideImages,tempOccorrence.image1])
-                if (tempOccorrence.image2)
-                    setSlideImages([...slideImages, tempOccorrence.image2])
-                if (tempOccorrence.image3)
-                    setSlideImages([...slideImages, tempOccorrence.image3])
-                if (tempOccorrence.image4)
-                    setSlideImages([...slideImages, tempOccorrence.image4])
-                setTimeout(() => {
-                    props.dispatch(loadingActions.setLoading(false, ''));
-                }, 500);
-            })
-            .catch((error) => {
-                console.log('error', error.message);
-            });
+        const doc = await firebaseFirestore.collection("occorrence").doc(id).get();
+        var tempOccorrence = { ...doc.data(), id: doc.id };
+        var tempImages = [''];
+        if (tempOccorrence.image1)
+            tempImages.push(tempOccorrence.image1);
+        if (tempOccorrence.image2)
+            tempImages.push(tempOccorrence.image2);
+        if (tempOccorrence.image3)
+            tempImages.push(tempOccorrence.image3);
+        if (tempOccorrence.image4)
+            tempImages.push(tempOccorrence.image4);
+
+        tempImages.shift();
+        console.log(tempImages);
+
+        setSlideImages(tempImages);
+        setOccurrence(tempOccorrence);
+        props.dispatch(loadingActions.setLoading(false, ''));
     }
 
 
@@ -90,6 +86,28 @@ function Occurrence(props) {
 
         }
     }
+
+
+    const SlideShow = () => {
+        if (slideImages.length > 0)
+            return (
+                <div>
+                    <Fade {...slideProperties}>
+                        {slideImages.map((image) => {
+                            return (
+                                <div key={image} style={{maxHeight: '350px'}}>
+                                    <div style={{background: `url(${occurrence.image1}) center/100% no-repeat`}}>
+                                        <img src={image} />
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </Fade>
+                </div>
+            )
+    }
+
+
     if (count > 5)
         return (
             <div>
@@ -105,19 +123,14 @@ function Occurrence(props) {
                 </div>
             </div>
         )
+    else if (!occurrence.id) { return (<></>) }
     else return (
         <div>
             <AppBar></AppBar>
             <div className="occurrence-container">
                 <div className="slide-container">
-                    <Slide {...slideProperties}> {
-                        slideImages.map((each, index) => <img key={index} style={{ width: "100%" }} src={each} />)
-                    }
-                    </Slide>
-                </div>
-                <h2>{occurrence.title}</h2>
-                <p>{occurrence.description}</p>
-                <div className="share-container">
+                    <SlideShow />
+                    <h2>{occurrence.title}</h2>
                     <div>
                         <span onClick={() => setCount(count + 1)}>{occurrence.userName} - {Moment(occurrence.date).format('DD/MM/YYYY HH:MM')}</span>
                     </div>
@@ -141,6 +154,7 @@ function Occurrence(props) {
                         />
                     </div>
                 </div>
+                <p>{occurrence.description}</p>
 
             </div>
         </div>

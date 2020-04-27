@@ -33,7 +33,7 @@ function PostOccurrences(props) {
 
     const handlePostOccurrence = async (e) => {
         e.preventDefault();
-        if (!URLImage1) {
+        if (count <= 0) {
             props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Insira pelo menos uma Imagem!'));
             return;
         }
