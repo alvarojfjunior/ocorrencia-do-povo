@@ -4,15 +4,15 @@ import 'firebase/firebase-firestore';
 import 'firebase/storage';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDf6A47iZZA0xDvVh5YCFlG03NV1jFcAag",
-    authDomain: "ocorrencia-do-povo.firebaseapp.com",
-    databaseURL: "https://ocorrencia-do-povo.firebaseio.com",
-    projectId: "ocorrencia-do-povo",
-    storageBucket: "ocorrencia-do-povo.appspot.com",
-    messagingSenderId: "348209652882",
-    appId: "1:348209652882:web:7ce20b859257d9779af24b",
-    measurementId: "G-CYQJJ1GHB6"
-  };
+  apiKey: "AIzaSyDMHNtSaXyaCpDu6kBgkqoSNJ6viSSbhfg",
+  authDomain: "ocorrenciadopovo-9bcec.firebaseapp.com",
+  databaseURL: "https://ocorrenciadopovo-9bcec.firebaseio.com",
+  projectId: "ocorrenciadopovo-9bcec",
+  storageBucket: "ocorrenciadopovo-9bcec.appspot.com",
+  messagingSenderId: "684281651618",
+  appId: "1:684281651618:web:017f6b8d40507a926552fb",
+  measurementId: "G-RQ2KKTMR13"
+};
 
 firebase.initializeApp(firebaseConfig);
 

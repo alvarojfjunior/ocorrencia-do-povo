@@ -5,14 +5,13 @@
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "192x192 512x512",
       "type": "image/x-icon"
     }
   ],
   "lang": "pt-BR",
-  "start_url": "/?source=pwa",
-  "display": "standalone",
+  "start_url": ".",
+  "display": "fullscreen",
   "theme_color": "#642484",
-  "background_color": "#642484",
-  "prefer_related_applications": true
+  "background_color": "#642484"
 }

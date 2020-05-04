@@ -9,17 +9,19 @@ import Occurrence from './pages/Occurrence';
 import NotFound from './pages/NotFound';
 
 
-const Routes = (props) => (
-    <BrowserRouter>
-        <Loading />
-        <Switch>
-            <Route exact path="/" component={Main}></Route>
-            <Route exact path="/post" component={PostOccurrences}></Route>
-            <Route path="/occurrence/:id" component={Occurrence}></Route>
-            <Route path='*' component={NotFound} />
-        </Switch>
-    </BrowserRouter>
-);
+function Routes() {
+    return (
+        <BrowserRouter>
+            <Loading />
+            <Switch>
+                <Route exact path="/" component={Main}></Route>
+                <Route exact path="/post" component={PostOccurrences}></Route>
+                <Route path="/occurrence/:id" component={Occurrence}></Route>
+                <Route path='*' component={NotFound} />
+            </Switch>
+        </BrowserRouter>
+    );
+}
 
 
-export default connect(state => ({ state }))(Routes);
+export default Routes;

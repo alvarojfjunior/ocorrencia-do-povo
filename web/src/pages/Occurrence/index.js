@@ -56,7 +56,7 @@ function Occurrence(props) {
             tempImages.push(tempOccorrence.image3);
         if (tempOccorrence.image4)
             tempImages.push(tempOccorrence.image4);
-        
+
         tempImages.shift();
 
         setSlideImages(tempImages);
@@ -94,8 +94,8 @@ function Occurrence(props) {
                     <Fade {...slideProperties}>
                         {slideImages.map((image) => {
                             return (
-                                <div key={image} style={{maxHeight: '350px'}}>
-                                    <div style={{background: `url(${occurrence.image1}) center/100% no-repeat`}}>
+                                <div key={image} style={{ maxHeight: '350px' }}>
+                                    <div style={{ background: `url(${occurrence.image1}) center/100% no-repeat` }}>
                                         <img src={image} />
                                     </div>
                                 </div>
@@ -133,8 +133,13 @@ function Occurrence(props) {
                     <div>
                         <span onClick={() => setCount(count + 1)}>{occurrence.userName} - {Moment(occurrence.date).format('DD/MM/YYYY HH:MM')}</span>
                     </div>
+                </div>
+
+                <div className="share-container">
                     <div>
                         <span >Compartilhar</span>
+                    </div>
+                    <div>
                         <WhatsappShareButton
                             className="share-button"
                             windowWidth="1000"
@@ -153,6 +158,7 @@ function Occurrence(props) {
                         />
                     </div>
                 </div>
+
                 <p>{occurrence.description}</p>
 
             </div>
