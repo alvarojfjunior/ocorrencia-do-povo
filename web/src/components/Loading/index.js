@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import './styles.css';
 
-function AppBar(props) {
+function Loading(props) {
     return (
         <div className="loading-container" style={props.state.loading.visible ? {height: '100%'} : {height: '0'}}>
             <ClipLoader
@@ -17,4 +17,4 @@ function AppBar(props) {
     );
 }
 
-export default connect(state => ({ state }))(AppBar);
+export default connect(state => ({ state }))(Loading);

@@ -1,0 +1,16 @@
+.login-container {
+    display: block;
+    text-align: center;
+}
+
+.login-container button {
+    font-size: medium;
+    border: 0;
+    background-color: transparent;
+    color: #0053ba;
+    cursor: pointer;
+}
+
+.login-container button:hover {
+    text-decoration: underline;
+}

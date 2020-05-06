@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import Carousel from 'react-elastic-carousel';
 
+import { firebaseAuth } from '../../config/firebase';
 import { UploadImage } from '../../helpers/FirebaseStorage';
 import { firebaseFirestore } from '../../config/firebase';
 import * as snackBarActions from '../../store/actions/snackbar';
@@ -11,9 +12,12 @@ import * as loadingActions from '../../store/actions/loading';
 import './styles.css';
 
 import AppBar from '../../components/AppBar';
+import Login from '../../pages/Login'
 
 function PostOccurrences(props) {
     const history = useHistory();
+
+    const [user, setUser] = useState({})
 
     const [image1, setImage1] = useState({});
     const [URLImage1, setURLImage1] = useState('');
@@ -30,6 +34,14 @@ function PostOccurrences(props) {
     const [userName, setUserName] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+
+
+    useEffect(() => {
+        firebaseAuth().onAuthStateChanged(function (user) {
+            setUser(user);
+             setUserName(user.displayName);
+        });
+    }, []);
 
     const handlePostOccurrence = async (e) => {
         e.preventDefault();
@@ -63,7 +75,7 @@ function PostOccurrences(props) {
                 count++;
                 const resultStorage = await UploadImage(`occurrences/${resultFirestoreAdd.id}`, `0${count}`, image2);
                 const resultStorageUpdate = await firebaseFirestore.collection('occorrence').doc(resultFirestoreAdd.id).update({
-                    image2 : resultStorage,
+                    image2: resultStorage,
                 });
             }
 
@@ -91,84 +103,84 @@ function PostOccurrences(props) {
         }
 
     }
-    return (
-        <div>
-            <AppBar btnPostVisible={false}></AppBar>
-            <div className="post-container">
-                <h3>Conte ao povo o que acontece na sua região!</h3>
-                <label htmlFor="fname">Imagens e vídeos</label>
-                <Carousel
-                    itemsToScroll={2}
-                    itemsToShow={2}
-                    className="carousel">
-                    <div className="item" style={URLImage1 ? { background: `url(${URLImage1}) #642484 center/100% no-repeat` } : {}}>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            className="input-upload"
-                            onChange={e => {
-                                setImage1(e.target.files[0]);
-                                setURLImage1(URL.createObjectURL(e.target.files[0]));
-                            }} />
-                    </div>
-                    <div className="item" style={URLImage2 ? { background: `url(${URLImage2}) #642484 center/100% no-repeat` } : {}}>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            className="input-upload"
-                            onChange={e => {
-                                setImage2(e.target.files[0]);
-                                setURLImage2(URL.createObjectURL(e.target.files[0]));
-                            }} />
-                    </div>
-                    <div className="item" style={URLImage3 ? { background: `url(${URLImage3}) #642484 center/100% no-repeat` } : {}}>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            className="input-upload"
-                            onChange={e => {
-                                setImage3(e.target.files[0]);
-                                setURLImage3(URL.createObjectURL(e.target.files[0]));
-                            }} />
-                    </div>
-                    <div className="item" style={URLImage4 ? { background: `url(${URLImage4}) #642484 center/100% no-repeat` } : {}}>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            className="input-upload"
-                            onChange={e => {
-                                setImage4(e.target.files[0]);
-                                setURLImage4(URL.createObjectURL(e.target.files[0]));
-                            }} />
-                    </div>
-                </Carousel>
-                <form onSubmit={handlePostOccurrence}>
-                    <label htmlFor="fname">Seu Nome</label>
-                    <input
-                        required
-                        value={userName}
-                        onChange={e => setUserName(e.target.value)}
-                        type="text"
-                        placeholder="Álvaro Ferreira" />
 
-                    <label htmlFor="lname">Título da Ocorrência</label>
-                    <input
-                        required
-                        value={title}
-                        onChange={e => setTitle(e.target.value)}
-                        type="text"
-                        placeholder="Acidente entre dois carros no bairro..." />
-                    <label htmlFor="lname">Descrição da Ocorrência</label>
-                    <textarea
-                        required
-                        value={description}
-                        onChange={e => setDescription(e.target.value)}
-                        placeholder="Hoje pela menhã houve um acidente no bairro Funcionários envolvendo dois carros ..." />
-                    <input type="submit" value="Postar!" />
-                </form>
+    if (!user) {
+        return <Login />
+    } else {
+        return (
+            <div>
+                <AppBar btnPostVisible={false}></AppBar>
+                <div className="post-container">
+                    <h3>Conte ao povo o que acontece na sua região!</h3>
+                    <label htmlFor="fname">Imagens e vídeos</label>
+                    <Carousel
+                        itemsToScroll={2}
+                        itemsToShow={2}
+                        className="carousel">
+                        <div className="item" style={URLImage1 ? { background: `url(${URLImage1}) #642484 center/100% no-repeat` } : {}}>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                className="input-upload"
+                                onChange={e => {
+                                    setImage1(e.target.files[0]);
+                                    setURLImage1(URL.createObjectURL(e.target.files[0]));
+                                }} />
+                        </div>
+                        <div className="item" style={URLImage2 ? { background: `url(${URLImage2}) #642484 center/100% no-repeat` } : {}}>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                className="input-upload"
+                                onChange={e => {
+                                    setImage2(e.target.files[0]);
+                                    setURLImage2(URL.createObjectURL(e.target.files[0]));
+                                }} />
+                        </div>
+                        <div className="item" style={URLImage3 ? { background: `url(${URLImage3}) #642484 center/100% no-repeat` } : {}}>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                className="input-upload"
+                                onChange={e => {
+                                    setImage3(e.target.files[0]);
+                                    setURLImage3(URL.createObjectURL(e.target.files[0]));
+                                }} />
+                        </div>
+                        <div className="item" style={URLImage4 ? { background: `url(${URLImage4}) #642484 center/100% no-repeat` } : {}}>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                className="input-upload"
+                                onChange={e => {
+                                    setImage4(e.target.files[0]);
+                                    setURLImage4(URL.createObjectURL(e.target.files[0]));
+                                }} />
+                        </div>
+                    </Carousel>
+                    <form onSubmit={handlePostOccurrence}>
+                        <center><label htmlFor="fname">{userName}</label></center>
+                        <br/>
+                        <br/>
+                        <label htmlFor="lname">Título da Ocorrência</label>
+                        <input
+                            required
+                            value={title}
+                            onChange={e => setTitle(e.target.value)}
+                            type="text"
+                            placeholder="Acidente entre dois carros no bairro..." />
+                        <label htmlFor="lname">Descrição da Ocorrência</label>
+                        <textarea
+                            required
+                            value={description}
+                            onChange={e => setDescription(e.target.value)}
+                            placeholder="Hoje pela menhã houve um acidente no bairro Funcionários envolvendo dois carros ..." />
+                        <input type="submit" value="Postar!" />
+                    </form>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 export default connect(state => ({ state }))(PostOccurrences);

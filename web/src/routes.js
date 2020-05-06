@@ -7,6 +7,7 @@ import Loading from './components/Loading';
 import PostOccurrences from './pages/PostOccurrences';
 import Occurrence from './pages/Occurrence';
 import NotFound from './pages/NotFound';
+import Login from './pages/Login';
 
 
 function Routes() {
@@ -15,6 +16,7 @@ function Routes() {
             <Loading />
             <Switch>
                 <Route exact path="/" component={Main}></Route>
+                <Route exact path="/login" component={Login}></Route>
                 <Route exact path="/post" component={PostOccurrences}></Route>
                 <Route path="/occurrence/:id" component={Occurrence}></Route>
                 <Route path='*' component={NotFound} />

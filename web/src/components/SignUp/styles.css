@@ -1,0 +1,60 @@
+.signup-container {
+    margin: auto;
+    margin-top: 50px;
+    background-color: white;
+    max-width: 450px;
+    border-radius: 20px;
+    padding: 10px;
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.signup-container .signup-avatar {
+    background-color: #642484;
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+    margin: auto;
+    margin-top: 25px;
+    background:url("../../assets/user.png") #642484 center/70% no-repeat;
+}
+
+
+.signup-container h3 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: dimgray;
+}
+
+.signup-container label {
+    margin-left: 3px;
+}
+
+.signup-container input[type=text], input[type=email], input[type=password] {
+    font-size: 15px;
+    color: #696969;
+    max-width: 100%;
+    min-width: 100%;
+    padding: 8px 10px;
+    margin: 5px 0;
+    margin-bottom: 15px;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.signup-container input[type=submit] {
+    width: 100%;
+    font-size: 25px;
+    background-color: #642484;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.signup-container input[type=submit]:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}

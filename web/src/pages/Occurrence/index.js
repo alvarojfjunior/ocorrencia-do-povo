@@ -131,7 +131,7 @@ function Occurrence(props) {
                     <SlideShow />
                     <h2>{occurrence.title}</h2>
                     <div>
-                        <span onClick={() => setCount(count + 1)}>{occurrence.userName} - {Moment(occurrence.date).format('DD/MM/YYYY HH:MM')}</span>
+                        <span onClick={() => setCount(count + 1)}>Lançado por {occurrence.userName} - {Moment(occurrence.date).format('DD/MM/YYYY HH:MM')}</span>
                     </div>
                 </div>
 
