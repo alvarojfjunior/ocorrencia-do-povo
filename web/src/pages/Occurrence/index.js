@@ -96,7 +96,7 @@ function Occurrence(props) {
                             return (
                                 <div key={image} style={{ maxHeight: '350px' }}>
                                     <div style={{ background: `url(${occurrence.image1}) center/100% no-repeat` }}>
-                                        <img src={image} />
+                                        <img data-action='share/whatsapp/share' src={image} />
                                     </div>
                                 </div>
                             )
