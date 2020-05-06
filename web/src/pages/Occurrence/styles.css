@@ -2,7 +2,23 @@
     max-width: 900px;
     padding: 10px;
     margin: 0 auto;
-    color: #696969;
+    background-color: #f2f2f2;
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.occurrence-container .occurrence-options {
+    display: flex;
+    align-items: center; /* Alinhamento vertical dos filhos */
+    justify-content: space-between; /* Tipo de espaçamento */
+    flex-wrap: wrap; /* Caso precise, quebra linha */
+}
+
+.occurrence-container .occurrence-options .icon {
+    color: black;
+    font-size: 25px;
+    cursor: pointer;
 }
 
 .occurrence-container .buttons-container {
@@ -20,7 +36,6 @@
 
 .occurrence-container img {
     width: 100%;
-    border-radius: 10px;
 }
 
 .occurrence-container h2 {

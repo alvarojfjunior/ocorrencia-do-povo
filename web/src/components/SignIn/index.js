@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import './styles.css';
 import { firebaseAuth } from '../../config/firebase';
+import * as loadingActions from '../../store/actions/loading';
 import * as snackBarActions from '../../store/actions/snackbar';
 
 function SignIn(props) {
@@ -15,7 +16,9 @@ function SignIn(props) {
     const handleSignIn = async e => {
         e.preventDefault();
         try {
+            props.dispatch(loadingActions.setLoading(true, 'Postando ...'));
             let resultAuth = await firebaseAuth().signInWithEmailAndPassword(email, password);
+            props.dispatch(loadingActions.setLoading(true, 'Postando ...'));
             props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Bem Vindo!'));
             history.push("/");
         } catch (error) {

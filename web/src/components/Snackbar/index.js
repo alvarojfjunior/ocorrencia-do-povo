@@ -9,7 +9,7 @@ function Snackbar(props) {
     if (props.state.snackbar.visible) {
         setTimeout(() => {
             props.dispatch(snackBarActions.setSnackbar(false)); 
-        }, 2000); 
+        }, 3000); 
     }
     
     function handleCloseSnackBar(e) {

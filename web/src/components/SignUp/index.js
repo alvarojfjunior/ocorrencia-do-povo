@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { firebaseAuth } from '../../config/firebase';
 
 import './styles.css';
+import * as loadingActions from '../../store/actions/loading';
 import * as snackBarActions from '../../store/actions/snackbar';
 
 function SignUp(props) {
@@ -19,8 +20,10 @@ function SignUp(props) {
             return;
         }
         try {
+            props.dispatch(loadingActions.setLoading(true, 'Postando ...'));
             let  resultAuth = await firebaseAuth().createUserWithEmailAndPassword(email, password);
             await resultAuth.user.updateProfile({displayName: name });
+            props.dispatch(loadingActions.setLoading(false, 'Postando ...'));
             props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Cadastrado com sucesso!'));
         } catch (error) {
             props.dispatch(snackBarActions.setSnackbar(true, 'error', error.message));

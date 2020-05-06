@@ -1,6 +1,8 @@
 .login-container {
     display: block;
     text-align: center;
+    padding: 10px;
+    padding-top: 5%;
 }
 
 .login-container button {
@@ -9,8 +11,16 @@
     background-color: transparent;
     color: #0053ba;
     cursor: pointer;
+    margin-bottom: 15px;
 }
 
 .login-container button:hover {
     text-decoration: underline;
+}
+
+@media screen and (max-width: 580px) {
+    .login-container {
+        position: relative;
+        top: 100px;
+    }
 }

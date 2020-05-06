@@ -6,6 +6,7 @@ import './styles.css';
 
 import SignIn from '../../components/SignIn';
 import SignUp from '../../components/SignUp';
+import AppBar from '../../components/AppBar'
 
 function Login(props) {
     const [showSignIn, setShowSignIn] = useState(true);
@@ -17,10 +18,13 @@ function Login(props) {
 
 
     return (
-        <div className="login-container">
-            {showSignIn ? <SignIn /> : <SignUp /> }
-            <button onClick={onChangeSiginIn}>{showSignIn ? 'Ainda não tenho conta' : 'Já possuo conta, entrar!' }</button>
-        </div>
+        <div>
+            <AppBar />
+            <div className="login-container">
+                {showSignIn ? <SignIn /> : <SignUp />}
+                <button onClick={onChangeSiginIn}>{showSignIn ? 'Ainda não tenho conta' : 'Já possuo conta, entrar!'}</button>
+            </div>
+        </div >
     );
 }
 

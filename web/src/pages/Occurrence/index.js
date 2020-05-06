@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Moment from 'moment';
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
-import { Slide, Fade } from 'react-slideshow-image';
+import { Fade } from 'react-slideshow-image';
+import { IoMdOptions } from 'react-icons/io';
 
-import logo from '../../assets/logo.png';
 import * as loadingActions from '../../store/actions/loading';
 
 import {
@@ -127,6 +127,10 @@ function Occurrence(props) {
         <div>
             <AppBar></AppBar>
             <div className="occurrence-container">
+                <div className="occurrence-options">
+                    <div></div>
+                    <div><IoMdOptions className="icon" /></div>
+                </div>
                 <div className="slide-container">
                     <SlideShow />
                     <h2>{occurrence.title}</h2>
@@ -145,8 +149,9 @@ function Occurrence(props) {
                             windowWidth="1000"
                             windowHeight="800"
                             children={<WhatsappIcon size={32} round={true} />}
+                            separator=" "
                             url={window.location.href}
-                            title={occurrence.title}
+                            title={`*${occurrence.title}*`}
                         />
                         <FacebookShareButton
                             className="share-button"
@@ -158,9 +163,7 @@ function Occurrence(props) {
                         />
                     </div>
                 </div>
-
                 <p>{occurrence.description}</p>
-
             </div>
         </div>
 

@@ -1,7 +1,6 @@
 .signin-container {
     margin: auto;
-    margin-top: 50px;
-    background-color: white;
+    background-color: #f2f2f2;
     max-width: 450px;
     border-radius: 20px;
     padding: 10px;
@@ -11,9 +10,9 @@
 
 .signin-container .signin-avatar {
     background-color: #642484;
-    height: 100px;
-    width: 100px;
-    border-radius: 50px;
+    height: 200px;
+    width: 200px;
+    border-radius: 100px;
     margin: auto;
     margin-top: 25px;
     background:url("../../assets/user.png") #642484 center/70% no-repeat;

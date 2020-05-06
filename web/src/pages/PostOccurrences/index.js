@@ -31,15 +31,14 @@ function PostOccurrences(props) {
     const [image4, setImage4] = useState({});
     const [URLImage4, setURLImage4] = useState('');
 
-    const [userName, setUserName] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
 
     useEffect(() => {
-        firebaseAuth().onAuthStateChanged(function (user) {
-            setUser(user);
-             setUserName(user.displayName);
+        firebaseAuth().onAuthStateChanged(user => {
+            setUser(user)
+            if (!user) props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Entre antes de postar, é rapidinho!'));
         });
     }, []);
 
@@ -52,7 +51,7 @@ function PostOccurrences(props) {
         try {
             props.dispatch(loadingActions.setLoading(true, 'Postando ...'));
             const resultFirestoreAdd = await firebaseFirestore.collection('occorrence').add({
-                userName,
+                userName: user.displayName,
                 title,
                 description,
                 image1: '',
@@ -105,7 +104,7 @@ function PostOccurrences(props) {
     }
 
     if (!user) {
-        return <Login />
+        return (<Login />)
     } else {
         return (
             <div>
@@ -159,9 +158,9 @@ function PostOccurrences(props) {
                         </div>
                     </Carousel>
                     <form onSubmit={handlePostOccurrence}>
-                        <center><label htmlFor="fname">{userName}</label></center>
-                        <br/>
-                        <br/>
+                        <center><label htmlFor="fname">{user.displayName}</label></center>
+                        <br />
+                        <br />
                         <label htmlFor="lname">Título da Ocorrência</label>
                         <input
                             required
