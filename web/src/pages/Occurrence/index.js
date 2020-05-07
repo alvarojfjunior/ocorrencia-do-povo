@@ -65,6 +65,14 @@ function Occurrence(props) {
     }
 
 
+    const handleDenounce = id => {
+
+    }
+
+    const handleEdit = id => {
+        
+    }
+
     const handleDelete = async (id) => {
         try {
             if (senha === 'arrozcomfeijao') {
@@ -129,7 +137,16 @@ function Occurrence(props) {
             <div className="occurrence-container">
                 <div className="occurrence-options">
                     <div></div>
-                    <div><IoMdOptions className="icon" /></div>
+                    <div className="drop-down-container">
+                        <div class="dropdown">
+                            <IoMdOptions className="icon" />
+                            <div class="dropdown-content">
+                                <p onClick={() => handleDenounce(occurrence.id)}>Denunciar</p>
+                                <p onClick={() => handleEdit(occurrence.id)}>Editar</p>
+                                <p onClick={() => handleDelete(occurrence.id)}>Excluir</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="slide-container">
                     <SlideShow />
