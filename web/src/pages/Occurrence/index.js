@@ -4,7 +4,10 @@ import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 import { Fade } from 'react-slideshow-image';
 import { IoMdOptions } from 'react-icons/io';
+import { confirmAlert } from 'react-confirm-alert';
+import { firebaseAuth } from '../../config/firebase';
 
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import * as loadingActions from '../../store/actions/loading';
 
 import {
@@ -24,10 +27,8 @@ import AppBar from '../../components/AppBar'
 function Occurrence(props) {
     const history = useHistory();
 
+    const [uid, setUid] = useState('');
     const [occurrence, setOccurrence] = useState({});
-
-    const [count, setCount] = useState(0);
-    const [senha, setSenha] = useState('');
 
     const [slideImages, setSlideImages] = useState([]);
     const slideProperties = {
@@ -37,9 +38,20 @@ function Occurrence(props) {
         indicators: true
     }
 
+
+
     useEffect(() => {
         const { id } = props.match.params;
         loadOccurrence(id);
+        firebaseAuth().onAuthStateChanged(user => {
+            setUid(user.uid)
+        });
+
+        if (!uid) {
+            setUid('1')
+        }
+
+        console.log(uid)
     }, []);
 
 
@@ -66,32 +78,36 @@ function Occurrence(props) {
 
 
     const handleDenounce = id => {
-
+        props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Pronto, denúncia em análise'));
     }
 
     const handleEdit = id => {
-        
+        history.push("/post");
     }
 
     const handleDelete = async (id) => {
-        try {
-            if (senha === 'arrozcomfeijao') {
-                try {
-                    const returnFirestore = await firebaseFirestore.collection("occorrence").doc(id).delete();
-                    props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'ocorrência deletada!'));
-                    history.push("/");
-                } catch (error) {
-                    setCount(0);
-                    props.dispatch(snackBarActions.setSnackbar(true, 'succes', error));
+        confirmAlert({
+            title: 'Deseja excluir esta ocorrência?',
+            message: 'Tem certeza disto?',
+            buttons: [
+                {
+                    label: 'Sim',
+                    onClick: async () => {
+                        try {
+                            const returnFirestore = await firebaseFirestore.collection("occorrence").doc(id).delete();
+                            props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'ocorrência deletada!'));
+                            history.push("/");
+                        } catch (error) {
+                            props.dispatch(snackBarActions.setSnackbar(true, 'succes', error));
+                        }
+                    }
+                },
+                {
+                    label: 'Não',
+                    onClick: () => { }
                 }
-            } else {
-                props.dispatch(snackBarActions.setSnackbar(true, 'error', 'Senha incorreta'));
-                return;
-            }
-
-        } catch (error) {
-
-        }
+            ]
+        });
     }
 
 
@@ -114,23 +130,7 @@ function Occurrence(props) {
             )
     }
 
-
-    if (count > 5)
-        return (
-            <div>
-                <AppBar></AppBar>
-                <div className="occurrence-container">
-                    <h3>Para deletar, é preciso ser administrador!</h3>
-                    <input
-                        type="text"
-                        value={senha}
-                        onChange={e => setSenha(e.target.value)}
-                    />
-                    <button onClick={() => handleDelete(occurrence.id)}>Deletar</button>
-                </div>
-            </div>
-        )
-    else if (!occurrence.id) { return (<></>) }
+    if (!occurrence.id) { return (<></>) }
     else return (
         <div>
             <AppBar></AppBar>
@@ -138,12 +138,12 @@ function Occurrence(props) {
                 <div className="occurrence-options">
                     <div></div>
                     <div className="drop-down-container">
-                        <div class="dropdown">
+                        <div className="dropdown">
                             <IoMdOptions className="icon" />
-                            <div class="dropdown-content">
+                            <div className="dropdown-content">
                                 <p onClick={() => handleDenounce(occurrence.id)}>Denunciar</p>
-                                <p onClick={() => handleEdit(occurrence.id)}>Editar</p>
-                                <p onClick={() => handleDelete(occurrence.id)}>Excluir</p>
+                                {occurrence.uid === uid ? <p onClick={() => handleEdit(occurrence.id)}>Editar</p> : <></>}
+                                {occurrence.uid === uid ? <p onClick={() => handleDelete(occurrence.id)}>Excluir</p> : <></>}
                             </div>
                         </div>
                     </div>
@@ -152,7 +152,7 @@ function Occurrence(props) {
                     <SlideShow />
                     <h2>{occurrence.title}</h2>
                     <div>
-                        <span onClick={() => setCount(count + 1)}>Lançado por {occurrence.userName} - {Moment(occurrence.date).format('DD/MM/YYYY HH:MM')}</span>
+                        <span>Lançado por {occurrence.userName} - {Moment(occurrence.date).format('DD/MM/YYYY HH:MM')}</span>
                     </div>
                 </div>
 

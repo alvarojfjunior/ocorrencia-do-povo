@@ -51,6 +51,7 @@ function PostOccurrences(props) {
         try {
             props.dispatch(loadingActions.setLoading(true, 'Postando ...'));
             const resultFirestoreAdd = await firebaseFirestore.collection('occorrence').add({
+                uid: user.uid,
                 userName: user.displayName,
                 title,
                 description,
