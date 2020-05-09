@@ -104,6 +104,7 @@ function Occurrence(props) {
             comment: comment,
             date: Date.now(),
         });
+        setComment('');
         props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Pronto!'));
         setComments([(await resultFirestoreAdd.get()).data(), ...comments]);
     }
