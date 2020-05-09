@@ -40,9 +40,12 @@ function PostOccurrences(props) {
         async function carregaUserAndOccurrence() {
             var { id } = props.match.params;
             await firebaseAuth().onAuthStateChanged(async user => {
-                if (!user) props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Entre antes de postar, faça login. É rapidinho!'));
+                if (!user) { 
+                    props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Entre antes de postar, faça login. É rapidinho!'));
+                    return ;
+                }
                 setUser(user)
-                //If exiits id url param, get occurrence
+                //If exiits id url param, get occurrence and
                 if (id) {
                     const doc = await firebaseFirestore.collection("occorrence").doc(id).get();
                     var tempOccorrence = { ...doc.data(), id: doc.id };
@@ -72,11 +75,11 @@ function PostOccurrences(props) {
             props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Insira pelo menos uma Imagem!'));
             return;
         }
+
         try {
             props.dispatch(loadingActions.setLoading(true, 'Postando ...'));
-
             console.log(occurrence)
-            if (occurrence) {
+            if (occurrence.id) {
                 const resultStorageUpdate = await firebaseFirestore.collection('occorrence').doc(occurrence.id).update({
                     uid: occurrence.uid,
                     userName: user.displayName,
