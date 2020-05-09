@@ -17,7 +17,8 @@ function Routes() {
             <Switch>
                 <Route exact path="/" component={Main}></Route>
                 <Route exact path="/login" component={Login}></Route>
-                <Route exact path="/post" component={PostOccurrences}></Route>
+                <Route exact path="/post/" component={PostOccurrences}></Route>
+                <Route exact path="/post/:id" component={PostOccurrences}></Route>
                 <Route path="/occurrence/:id" component={Occurrence}></Route>
                 <Route path='*' component={NotFound} />
             </Switch>

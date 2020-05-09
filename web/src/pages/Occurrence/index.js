@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 import { Fade } from 'react-slideshow-image';
 import { IoMdOptions } from 'react-icons/io';
+import { BsFillHeartFill } from 'react-icons/bs';
 import { confirmAlert } from 'react-confirm-alert';
 import { firebaseAuth } from '../../config/firebase';
 
@@ -28,7 +29,15 @@ function Occurrence(props) {
     const history = useHistory();
 
     const [uid, setUid] = useState('');
+    var occurrenceId = '';
+    const [user, setUser] = useState({});
     const [occurrence, setOccurrence] = useState({});
+
+    const [comments, setComments] = useState([]);
+    const [comment, setComment] = useState('');
+
+    const [countLikes, setCountLikes] = useState(0);
+
 
     const [slideImages, setSlideImages] = useState([]);
     const slideProperties = {
@@ -44,6 +53,7 @@ function Occurrence(props) {
         const { id } = props.match.params;
         loadOccurrence(id);
         firebaseAuth().onAuthStateChanged(user => {
+            setUser(user);
             setUid(user.uid)
         });
 
@@ -51,7 +61,7 @@ function Occurrence(props) {
             setUid('1')
         }
 
-        console.log(uid)
+        loadComments(id);
     }, []);
 
 
@@ -73,6 +83,8 @@ function Occurrence(props) {
 
         setSlideImages(tempImages);
         setOccurrence(tempOccorrence);
+
+        setCountLikes(tempOccorrence.countLikes);
         props.dispatch(loadingActions.setLoading(false, ''));
     }
 
@@ -82,10 +94,21 @@ function Occurrence(props) {
     }
 
     const handleEdit = id => {
-        history.push("/post");
+        history.push(`/post/${occurrence.id}`);
     }
 
-    const handleDelete = async (id) => {
+    const handleMakeComment = async e => {
+        const resultFirestoreAdd = await firebaseFirestore.collection('comments').add({
+            occurrence: occurrence.id,
+            userName: user.displayName,
+            comment: comment,
+            date: Date.now(),
+        });
+        props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Pronto!'));
+        setComments([(await resultFirestoreAdd.get()).data(), ...comments]);
+    }
+
+    const handleDelete = id => {
         confirmAlert({
             title: 'Deseja excluir esta ocorrência?',
             message: 'Tem certeza disto?',
@@ -110,7 +133,13 @@ function Occurrence(props) {
         });
     }
 
-
+    const handleLike = async () => {
+        const resultFirestoreUpdate = await firebaseFirestore.collection('occorrence').doc(occurrence.id).update({
+            'countLikes': countLikes + 1,
+        });
+        setCountLikes(countLikes + 1);
+        console.log(resultFirestoreUpdate)
+    }
     const SlideShow = () => {
         if (slideImages.length > 0)
             return (
@@ -121,6 +150,13 @@ function Occurrence(props) {
                                 <div key={image} style={{ maxHeight: '350px' }}>
                                     <div style={{ background: `url(${occurrence.image1}) center/100% no-repeat` }}>
                                         <img data-action='share/whatsapp/share' src={image} />
+
+                                        <div className="like-container">
+                                            <div onClick={handleLike}>
+                                                <span>{countLikes}</span>
+                                                <BsFillHeartFill className="like" onClick={handleLike}></BsFillHeartFill>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             )
@@ -128,6 +164,36 @@ function Occurrence(props) {
                     </Fade>
                 </div>
             )
+    }
+
+
+    function loadComments(id) {
+        console.log(occurrenceId)
+        firebaseFirestore.collection("comments").where("occurrence", "==", id).orderBy("date", "desc")
+            .get()
+            .then(function (querySnapshot) {
+                var tempComments = [];
+                querySnapshot.forEach(function (docs) {
+                    tempComments = [...tempComments, { ...docs.data(), id: docs.id }];
+                });
+                setComments(tempComments);
+            })
+            .catch((error) => {
+                console.log('error', error.message);
+            });
+    }
+
+    const Comments = (e) => {
+        return (
+            <div className="list-container">
+                {comments.map(comment => (
+                    <div className="comment-item" key={comment.id}>
+                        <h5>{`${comment.userName} - ${Moment(occurrence.date).format('DD/MM/YYYY HH:MM')}`}</h5>
+                        <p>{comment.comment}</p>
+                    </div>
+                ))}
+            </div>
+        )
     }
 
     if (!occurrence.id) { return (<></>) }
@@ -181,6 +247,21 @@ function Occurrence(props) {
                     </div>
                 </div>
                 <p>{occurrence.description}</p>
+                <div className="comments-container">
+                    Comentários:
+                <div className="form">
+                        <textarea
+                            required
+                            rows="4"
+                            value={comment}
+                            onChange={e => setComment(e.target.value)}></textarea>
+                        <div>
+                            <div></div>
+                            <button onClick={handleMakeComment}>Comentar</button>
+                        </div>
+                    </div>
+                    <Comments />
+                </div>
             </div>
         </div>
 

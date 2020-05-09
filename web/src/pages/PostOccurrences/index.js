@@ -12,12 +12,13 @@ import * as loadingActions from '../../store/actions/loading';
 import './styles.css';
 
 import AppBar from '../../components/AppBar';
-import Login from '../../pages/Login'
+import Login from '../../pages/Login';
 
 function PostOccurrences(props) {
     const history = useHistory();
+    const [user, setUser] = useState({});
 
-    const [user, setUser] = useState({})
+    const [occurrence, setOccurrence] = useState({});
 
     const [image1, setImage1] = useState({});
     const [URLImage1, setURLImage1] = useState('');
@@ -36,10 +37,33 @@ function PostOccurrences(props) {
 
 
     useEffect(() => {
-        firebaseAuth().onAuthStateChanged(user => {
-            setUser(user)
-            if (!user) props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Entre antes de postar, é rapidinho!'));
-        });
+        async function carregaUserAndOccurrence() {
+            var { id } = props.match.params;
+            await firebaseAuth().onAuthStateChanged(async user => {
+                if (!user) props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Entre antes de postar, faça login. É rapidinho!'));
+                setUser(user)
+                //If exiits id url param, get occurrence
+                if (id) {
+                    const doc = await firebaseFirestore.collection("occorrence").doc(id).get();
+                    var tempOccorrence = { ...doc.data(), id: doc.id };
+                    setOccurrence(tempOccorrence);
+                    if (user.uid !== tempOccorrence.uid) {
+                        props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Você não tem permissão para efetuar esta ação!'));
+                        history.push('/');
+                    }
+                    else if (user.uid === tempOccorrence.uid) {
+                        setTitle(tempOccorrence.title);
+                        setDescription(tempOccorrence.description);
+                        setURLImage1(tempOccorrence.image1);
+                        setURLImage2(tempOccorrence.image2);
+                        setURLImage3(tempOccorrence.image3);
+                        setURLImage4(tempOccorrence.image4);
+                    }
+                }
+            });
+        }
+        carregaUserAndOccurrence();
+
     }, []);
 
     const handlePostOccurrence = async (e) => {
@@ -50,11 +74,32 @@ function PostOccurrences(props) {
         }
         try {
             props.dispatch(loadingActions.setLoading(true, 'Postando ...'));
+
+            console.log(occurrence)
+            if (occurrence) {
+                const resultStorageUpdate = await firebaseFirestore.collection('occorrence').doc(occurrence.id).update({
+                    uid: occurrence.uid,
+                    userName: user.displayName,
+                    title,
+                    description,
+                    image1: URLImage1,
+                    image2: URLImage2,
+                    image3: URLImage3,
+                    image4: URLImage4,
+                    date: Date.now(),
+                });
+                props.dispatch(loadingActions.setLoading(false, ''));
+                props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Ocorrência cadastrada!'));
+                history.push("/");
+                return;
+            }
+
             const resultFirestoreAdd = await firebaseFirestore.collection('occorrence').add({
                 uid: user.uid,
                 userName: user.displayName,
                 title,
                 description,
+                'countLikes': 0,
                 image1: '',
                 image2: '',
                 image3: '',
@@ -104,9 +149,9 @@ function PostOccurrences(props) {
 
     }
 
-    if (!user) {
+    if (!user)
         return (<Login />)
-    } else {
+    else {
         return (
             <div>
                 <AppBar btnPostVisible={false}></AppBar>
