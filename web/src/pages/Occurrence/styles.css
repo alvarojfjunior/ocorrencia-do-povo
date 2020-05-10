@@ -91,49 +91,31 @@
 
 .occurrence-container .share-container div span {
     color: RGBA(0,0,0,.90);
-    margin-right: 10px;
+    margin: auto 5px;
+    font-weight: bold;
 }
 
 .occurrence-container .share-container div .share-button {
     margin-right: 5px;
 }
 
-.occurrence-container p {
-    text-align: justify;
-    color: RGBA(0,0,0,.70);
-}
-
-.occurrence-container .like-container {
-    position: absolute;
-    background-color: transparent;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center; /* Alinhamento vertical dos filhos */
-    justify-content: center; /* Tipo de espaçamento */
-    flex-wrap: wrap; /* Caso precise, quebra linha */
-    top: 0%;
-    z-index:9998;
-}
-
-
-.occurrence-container .like-container div span {
-    position: absolute;
-    color: white;
-    font-size: 50px;
-    z-index:9999;
-    margin-left: 36px;
-    margin-top: 16px;
-    cursor: pointer;
-}
-
-.occurrence-container .like-container .like {
-    color: red;
-    font-size: 100px;
-	transform: scale(1);
+.occurrence-container .share-container div img {
+    width: 50px;
+    height: 50px;
+    transform: scale(1);
     animation: pulse 2s infinite;
     cursor: pointer;
-    z-index:9999;
+}
+
+.occurrence-container .share-container div div span {
+    background-color: #642484;;
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 20px;
+    font-size: 20px;
+    padding-top: 5px;
+    padding-left: 12px;
 }
 
 @keyframes pulse {
@@ -150,6 +132,10 @@
 	}
 }
 
+.occurrence-container p {
+    text-align: justify;
+    color: RGBA(0,0,0,.70);
+}
 
 .occurrence-container .comments-container {
     width: 100%;

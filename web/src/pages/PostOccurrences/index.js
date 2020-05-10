@@ -42,7 +42,6 @@ function PostOccurrences(props) {
             await firebaseAuth().onAuthStateChanged(async user => {
                 if (!user) { 
                     props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Entre antes de postar, faça login. É rapidinho!'));
-                    return ;
                 }
                 setUser(user)
                 //If exiits id url param, get occurrence and
@@ -84,6 +83,7 @@ function PostOccurrences(props) {
                     uid: occurrence.uid,
                     userName: user.displayName,
                     title,
+                    'countLikes': 0, 
                     description,
                     image1: URLImage1,
                     image2: URLImage2,

@@ -10,6 +10,7 @@ import { firebaseAuth } from '../../config/firebase';
 
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import * as loadingActions from '../../store/actions/loading';
+import clapingHands from '../../assets/claping-hands.png';
 
 import {
     WhatsappShareButton,
@@ -29,7 +30,6 @@ function Occurrence(props) {
     const history = useHistory();
 
     const [uid, setUid] = useState('');
-    var occurrenceId = '';
     const [user, setUser] = useState({});
     const [occurrence, setOccurrence] = useState({});
 
@@ -51,16 +51,8 @@ function Occurrence(props) {
 
     useEffect(() => {
         const { id } = props.match.params;
+        loadUser();
         loadOccurrence(id);
-        firebaseAuth().onAuthStateChanged(user => {
-            setUser(user);
-            setUid(user.uid)
-        });
-
-        if (!uid) {
-            setUid('1')
-        }
-
         loadComments(id);
     }, []);
 
@@ -89,6 +81,16 @@ function Occurrence(props) {
     }
 
 
+    const loadUser = async () => {
+        await firebaseAuth().onAuthStateChanged(user => {
+            if (user) {
+                setUser(user);
+                setUid(user.uid);
+            }
+        });
+    }
+
+
     const handleDenounce = id => {
         props.dispatch(snackBarActions.setSnackbar(true, 'succes', 'Pronto, denúncia em análise'));
     }
@@ -98,9 +100,12 @@ function Occurrence(props) {
     }
 
     const handleMakeComment = async e => {
+        console.log(occurrence.id);
+        console.log(user.displayName);
+        console.log(comment);
         const resultFirestoreAdd = await firebaseFirestore.collection('comments').add({
             occurrence: occurrence.id,
-            userName: user.displayName,
+            userName: user.displayName ? user.displayName : 'Anônimo',
             comment: comment,
             date: Date.now(),
         });
@@ -135,12 +140,12 @@ function Occurrence(props) {
     }
 
     const handleLike = async () => {
-        const resultFirestoreUpdate = await firebaseFirestore.collection('occorrence').doc(occurrence.id).update({
+        await firebaseFirestore.collection('occorrence').doc(occurrence.id).update({
             'countLikes': countLikes + 1,
         });
         setCountLikes(countLikes + 1);
-        console.log(resultFirestoreUpdate)
     }
+
     const SlideShow = () => {
         if (slideImages.length > 0)
             return (
@@ -151,13 +156,6 @@ function Occurrence(props) {
                                 <div key={image} style={{ maxHeight: '350px' }}>
                                     <div style={{ background: `url(${occurrence.image1}) center/100% no-repeat` }}>
                                         <img data-action='share/whatsapp/share' src={image} />
-
-                                        <div className="like-container">
-                                            <div onClick={handleLike}>
-                                                <span>{countLikes}</span>
-                                                <BsFillHeartFill className="like" onClick={handleLike}></BsFillHeartFill>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             )
@@ -169,7 +167,6 @@ function Occurrence(props) {
 
 
     function loadComments(id) {
-        console.log(occurrenceId)
         firebaseFirestore.collection("comments").where("occurrence", "==", id).orderBy("date", "desc")
             .get()
             .then(function (querySnapshot) {
@@ -226,8 +223,6 @@ function Occurrence(props) {
                 <div className="share-container">
                     <div>
                         <span >Compartilhar</span>
-                    </div>
-                    <div>
                         <WhatsappShareButton
                             className="share-button"
                             windowWidth="1000"
@@ -245,6 +240,10 @@ function Occurrence(props) {
                             url={window.location.href}
                             quote={occurrence.title}
                         />
+                    </div>
+                    <div>
+                        <img src={clapingHands} onClick={handleLike} />
+                        <div><span style={countLikes >= 10 ? {paddingLeft: '7px'} : {}}>{countLikes}</span></div>
                     </div>
                 </div>
                 <p>{occurrence.description}</p>
