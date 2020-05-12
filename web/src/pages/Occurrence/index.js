@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 import { Fade } from 'react-slideshow-image';
 import { IoMdOptions } from 'react-icons/io';
-import { BsFillHeartFill } from 'react-icons/bs';
 import { confirmAlert } from 'react-confirm-alert';
 import { firebaseAuth } from '../../config/firebase';
 
@@ -227,7 +226,7 @@ function Occurrence(props) {
                             className="share-button"
                             windowWidth="1000"
                             windowHeight="800"
-                            children={<WhatsappIcon size={32} round={true} />}
+                            children={<WhatsappIcon size={40} round={true} />}
                             separator=" "
                             url={window.location.href}
                             title={`*${occurrence.title}*`}
@@ -236,7 +235,7 @@ function Occurrence(props) {
                             className="share-button"
                             windowWidth="1000"
                             windowHeight="800"
-                            children={<FacebookIcon size={32} round={true} />}
+                            children={<FacebookIcon size={40} round={true} />}
                             url={window.location.href}
                             quote={occurrence.title}
                         />

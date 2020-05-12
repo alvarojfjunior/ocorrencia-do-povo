@@ -8,6 +8,10 @@
     border-radius: 10px;
 }
 
+.occurrence-container .slide-container {
+    cursor: pointer;
+}
+
 .occurrence-container .occurrence-options {
     display: flex;
     align-items: center; /* Alinhamento vertical dos filhos */
