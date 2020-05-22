@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Image } from 'react-native';
-import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base'
+import { Container, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base'
 import { AppLoading } from 'expo';
 import Moment from 'moment';
 
-import { firebaseFirestore } from '../../config/firebase';
+import light from './Themes/light';
+
+import { firebaseFirestore } from '../../../config/firebase';
+
+import AddButton from '../../components/AddButton';
+import Spinner from '../../components/Spinner';
 
 export default function Main() {
     const [occurrences, setOccurrences] = useState([]);
@@ -25,20 +30,15 @@ export default function Main() {
     }
 
     const handleLike = () => {
-        alert('Opa!');
+        alert('Liked');
     }
 
     if (!isReady) {
-        return <AppLoading />;
+        return <Spinner />;
     }
     return (
-        <Container style={styles.container}>
-            <Header style={styles.header}>
-                <Left>
-                    <Text>Ocorrência do Povo</Text>
-                </Left>
-            </Header>
-            <Content>
+        <Container >
+            <Content theme={light} style={styles.container}>
                 {occurrences.map(occurrence => (
                     <Card key={occurrence.id} style={{ flex: 0 }}>
                         <CardItem>
@@ -69,6 +69,7 @@ export default function Main() {
                     </Card>
                 ))}
             </Content>
+            <AddButton />
         </Container >
     );
 }
@@ -76,9 +77,6 @@ export default function Main() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
-    },
-    body: {
         flex: 1,
     }
 });

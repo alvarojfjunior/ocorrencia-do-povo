@@ -1,11 +1,10 @@
 import React from 'react';
-import { StatusBar, YellowBox } from 'react-native';
+import { StatusBar, YellowBox, StyleSheet } from 'react-native';
 import { AppLoading } from 'expo';
-import { Container, Text } from 'native-base';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 
-import Main from './pages/Main';
+import Routes from './src/routes';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -14,7 +13,8 @@ export default class App extends React.Component {
       'Setting a timer',
       'Possible Unhandled Promise Rejection',
       'Each child',
-      'Can'
+      'Can',
+      'Unhandled promise',
     ]);
 
     this.state = {
@@ -39,8 +39,15 @@ export default class App extends React.Component {
     return (
       <>
         <StatusBar barStyle="light-content" backgroundColor="#7D40E7" />
-        <Main />
+        <Routes style={styles.app} />
       </>
     );
   }
 }
+
+
+const styles = StyleSheet.create({
+  addButton: {
+      zIndex: 1,
+  }
+});

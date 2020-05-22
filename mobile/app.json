@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Ocorrencia do Povo",
+    "name": "Ocorrência do Povo",
     "slug": "ocorrenciadopovo",
     "platforms": [
       "ios",
@@ -13,7 +13,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#642484"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -21,7 +21,12 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+      "package": "com.ocorrenciadopovo",
+      "versionCode": 1
+    },
     "ios": {
+      "bundleIdentifier": "com.ocorrenciadopovo",
       "supportsTablet": true
     }
   }
