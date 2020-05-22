@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Spinner, Container, Header, Content, Form, Item, Input, Button, Icon, Text } from 'native-base';
+import { Container, Content, Form, Item, Input, Button, Icon, Text } from 'native-base';
 
+import Loading from '../../components/Loading';
 import { firebaseFirestore } from '../../../config/firebase';
 
 export default function PostOccurrence() {
@@ -14,17 +15,16 @@ export default function PostOccurrence() {
     }, []);
 
     if (!isReady) {
-        return <Spinner color='blue' />
+        return <Loading color='blue' />
     }
 
     return (
         <Container style={styles.container}>
-            <Header>
-                <Button transparent onPress={() => navigation.goBack()}>
-                    <Icon name='arrow-back' />
-                </Button>
-            </Header>
             <Content>
+                <Button style={styles.buttonBack} transparent onPress={() => navigation.goBack()}>
+                    <Icon style={styles.headerIcons} name='arrow-back' />
+                </Button>
+                <Text style={styles.title}> Conte ao povo o que acontece na sua região! </Text>
                 <Form>
                     <Item>
                         <Input placeholder="Username" />
@@ -34,16 +34,26 @@ export default function PostOccurrence() {
                     </Item>
                 </Form>
             </Content>
-        </Container >
+        </Container>
     );
 }
-
 
 const styles = StyleSheet.create({
     container: {
         flex: 1
     },
     buttonBack: {
-
-    }
+        alignSelf: "flex-start",
+    },
+    headerIcons: {
+        color: '#642484'
+    },
+    title: {
+        fontWeight: 'bold',
+        fontSize: 15,
+        color: '#642484',
+        marginTop: 15,
+        marginBottom: 15,
+        textAlign: 'center'
+    },
 });

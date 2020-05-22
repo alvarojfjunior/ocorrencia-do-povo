@@ -3,8 +3,6 @@ import { StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Container, Icon, Button } from 'native-base';
 
-
-
 export default function AddButton() {
     const navigation = useNavigation();
     return (
@@ -30,7 +28,8 @@ const styles = StyleSheet.create({
         height: 70,
         width: 70,
         borderRadius: 50,
-        backgroundColor: '#642484'        
+        backgroundColor: '#642484',
+        shadowColor: 'black',
     },
     addIcon: {
         height: 60,

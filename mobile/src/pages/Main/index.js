@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Image } from 'react-native';
-import { Container, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base'
-import { AppLoading } from 'expo';
+import { useNavigation } from '@react-navigation/native';
+import { Container, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
 import Moment from 'moment';
-
-import light from './Themes/light';
 
 import { firebaseFirestore } from '../../../config/firebase';
 
 import AddButton from '../../components/AddButton';
-import Spinner from '../../components/Spinner';
+import ComponentSpinner from '../../components/Loading';
+import Loading from '../../components/Loading';
 
 export default function Main() {
+    const navigation = useNavigation();
     const [occurrences, setOccurrences] = useState([]);
     const [isReady, setIsReady] = useState(false);
 
@@ -34,14 +34,15 @@ export default function Main() {
     }
 
     if (!isReady) {
-        return <Spinner />;
+        return <Loading />;
     }
+
     return (
-        <Container >
-            <Content theme={light} style={styles.container}>
+        <Container>
+            <Content style={styles.container}>
                 {occurrences.map(occurrence => (
                     <Card key={occurrence.id} style={{ flex: 0 }}>
-                        <CardItem>
+                        <CardItem onTouchEnd={() => alert('Vai abrir o cadastro do cara')}>
                             <Left>
                                 <Thumbnail source={{ uri: 'https://www.thispersondoesnotexist.com/image' }} />
                                 <Body>
@@ -50,7 +51,7 @@ export default function Main() {
                                 </Body>
                             </Left>
                         </CardItem>
-                        <CardItem>
+                        <CardItem onTouchEnd={() => navigation.navigate('Occurrence')}>
                             <Body>
                                 <Image source={{ uri: occurrence.image1 }} style={{ height: 200, width: '100%', flex: 1 }} />
                                 <Text>
@@ -61,7 +62,7 @@ export default function Main() {
                         <CardItem>
                             <Left>
                                 <Button onPress={() => handleLike()} transparent textStyle={{ color: '#87838B' }}>
-                                    <Icon name="logo-github" />
+                                    <Icon name="heart" />
                                     <Text>{occurrence.countLikes} Likes</Text>
                                 </Button>
                             </Left>
@@ -73,7 +74,6 @@ export default function Main() {
         </Container >
     );
 }
-
 
 const styles = StyleSheet.create({
     container: {
