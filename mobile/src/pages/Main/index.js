@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Container, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
 import Moment from 'moment';
 
-import { firebaseFirestore } from '../../../config/firebase';
+import { firebaseFirestore } from '../../config/firebase';
 
 import AddButton from '../../components/AddButton';
 import ComponentSpinner from '../../components/Loading';
@@ -42,16 +42,15 @@ export default function Main() {
             <Content style={styles.container}>
                 {occurrences.map(occurrence => (
                     <Card key={occurrence.id} style={{ flex: 0 }}>
-                        <CardItem onTouchEnd={() => alert('Vai abrir o cadastro do cara')}>
+                        <CardItem onTouchEnd={() => navigation.navigate('Occurrence', {occurrence})}>
                             <Left>
-                                <Thumbnail source={{ uri: 'https://www.thispersondoesnotexist.com/image' }} />
                                 <Body>
                                     <Text>{occurrence.userName}</Text>
                                     <Text note>{Moment(occurrence.date).format('DD/MM/YYYY HH:MM')}</Text>
                                 </Body>
                             </Left>
                         </CardItem>
-                        <CardItem onTouchEnd={() => navigation.navigate('Occurrence')}>
+                        <CardItem onTouchEnd={() => navigation.navigate('Occurrence', {occurrence})}>
                             <Body>
                                 <Image source={{ uri: occurrence.image1 }} style={{ height: 200, width: '100%', flex: 1 }} />
                                 <Text>
@@ -59,7 +58,7 @@ export default function Main() {
                                 </Text>
                             </Body>
                         </CardItem>
-                        <CardItem>
+                        <CardItem onTouchEnd={() => navigation.navigate('Occurrence', {occurrence})}>
                             <Left>
                                 <Button onPress={() => handleLike()} transparent textStyle={{ color: '#87838B' }}>
                                     <Icon name="heart" />

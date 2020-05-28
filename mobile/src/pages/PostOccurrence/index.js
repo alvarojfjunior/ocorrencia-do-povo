@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Container, Content, Form, Item, Input, Button, Icon, Text } from 'native-base';
+import { Container, Content, Form, Item, Input, Button, Icon, Text, Label, Textarea } from 'native-base';
 
 import Loading from '../../components/Loading';
-import { firebaseFirestore } from '../../../config/firebase';
+import { firebaseFirestore } from '../../config/firebase';
+import { FontDisplay } from 'expo-font';
 
 export default function PostOccurrence() {
     const navigation = useNavigation();
     const [isReady, setIsReady] = useState(false);
+    const [description, setDescription] = useState('')
 
     useEffect(() => {
         setIsReady(true);
     }, []);
+
 
     if (!isReady) {
         return <Loading color='blue' />
@@ -20,17 +23,29 @@ export default function PostOccurrence() {
 
     return (
         <Container style={styles.container}>
-            <Content>
+            <Content padder>
                 <Button style={styles.buttonBack} transparent onPress={() => navigation.goBack()}>
                     <Icon style={styles.headerIcons} name='arrow-back' />
                 </Button>
                 <Text style={styles.title}> Conte ao povo o que acontece na sua região! </Text>
                 <Form>
                     <Item>
-                        <Input placeholder="Username" />
+                        <Content style={styles.imgContent}>
+                            <Text>Imagens aqui</Text>
+                        </Content>
                     </Item>
-                    <Item last>
-                        <Input placeholder="Password" />
+                    <Item>
+                        <Input placeholder="Título" style={styles.inputText} />
+                    </Item>
+                    <Item>
+                        <Textarea
+                            placeholder="Descrição"
+                            rowSpan={5}
+                            style={styles.textarea}
+                            value={description}
+                            onChangeText={setDescription}
+                            style={styles.inputText}
+                        />
                     </Item>
                 </Form>
             </Content>
@@ -40,7 +55,7 @@ export default function PostOccurrence() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
     },
     buttonBack: {
         alignSelf: "flex-start",
@@ -56,4 +71,13 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         textAlign: 'center'
     },
+    inputText: {
+        fontSize: 15,
+        padding: 10,
+        paddingLeft: 10
+    },
+    imgContent: {
+        height: 150,
+        backgroundColor: 'orange'
+    }
 });
