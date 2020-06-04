@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "ocorrencia-do-povo"
+    "default": "ocorrencia-do-povo",
+    "ocorrenciadopovoweb": "ocorrenciadopovo-9bcec"
   }
 }

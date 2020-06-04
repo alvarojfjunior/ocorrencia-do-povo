@@ -8,10 +8,10 @@ function AppBar(props) {
     return (
         <div className="app-bar">
             <h1>
-            <Link to='/'>Ocorrência do Povo</Link>
+            <Link to='/'>App dos pets desaparecidos</Link>
             </h1>
             <nav>
-                {props.btnPostVisible !== false ? <Link className="button-new-post" to='/post'>REGISTRAR OCORRÊNCIA</Link> : <></>}
+                {props.btnPostVisible !== false ? <Link className="button-new-post" to='/post'>OMG! MEU PET SUMIU!</Link> : <></>}
             </nav>
         </div>
     );
